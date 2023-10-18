@@ -9,10 +9,16 @@ A super-lightweight unofficial SDK for Safe Global, powered by viem.
 ### Submitting a transaction to a Safe wallet
 
 ```ts
-import {
-  ApiKit,
-  piggybankWalletActions,
-  piggybankPublicActions,
-} from 'piggybank'
+import { ApiClient } from 'piggybank/api'
+import { publicSafeActions } from 'piggybank/actions'
 import { createWalletClient } from 'viem'
+
+const client = new ApiClient({ url: '' })
+
+const publicClient = createPublicClient({
+  transport: http(),
+  chain: goerli,
+}).extend(publicSafeActions(safeAddress))
+
+await client.proposeTransaction({})
 ```

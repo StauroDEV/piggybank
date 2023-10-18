@@ -7,12 +7,19 @@ import {
   GetSafeTransactionHashArgs,
   getSafeTransactionHash,
 } from './getSafeTransactionHash.js'
+import {
+  EstimateSafeTransactionBaseGasArgs,
+  estimateSafeTransactionBaseGas,
+} from './esimateSafeTransactionBaseGas.js'
 
 export type PublicSafeActions = {
   estimateSafeTransactionGas: (
     args: EstimateSafeTransactionGasArgs
   ) => Promise<bigint>
   getSafeTransactionHash: (args: GetSafeTransactionHashArgs) => Promise<Hash>
+  estimateSafeTransactionBaseGas: (
+    args: EstimateSafeTransactionBaseGasArgs
+  ) => Promise<bigint>
 }
 
 export const publicSafeActions = (
@@ -23,5 +30,7 @@ export const publicSafeActions = (
       estimateSafeTransactionGas(client, safeAddress, args),
     getSafeTransactionHash: (args) =>
       getSafeTransactionHash(client, safeAddress, args),
+    estimateSafeTransactionBaseGas: (args) =>
+      estimateSafeTransactionBaseGas(client, safeAddress, args),
   })
 }

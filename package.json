@@ -12,6 +12,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "devalue": "^4.3.2",
     "semver": "^7.5.4",
     "viem": "^1.16.5"
   }
