@@ -25,7 +25,7 @@ export type PublicSafeActions = {
 export const publicSafeActions = (
   safeAddress: Address
 ): ((client: PublicClient) => PublicSafeActions) => {
-  return (client: PublicClient) => ({
+  return (client) => ({
     estimateSafeTransactionGas: (args) =>
       estimateSafeTransactionGas(client, safeAddress, args),
     getSafeTransactionHash: (args) =>

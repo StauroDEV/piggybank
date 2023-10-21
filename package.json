@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "devalue": "^4.3.2",
+    "ethereum-cryptography": "^2.1.2",
     "semver": "^7.5.4",
     "viem": "^1.16.5"
   }
