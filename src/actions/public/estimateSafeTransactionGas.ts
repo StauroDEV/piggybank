@@ -55,12 +55,18 @@ export const estimateSafeTransactionGas = async (
 
     return decodeSafeTxGas(encodedResponse)
   } catch (e) {
-    return decodeSafeTxGas(
-      (
-        ((e as CallExecutionError).cause.cause as RpcRequestError).cause as {
-          data: Hex
-        }
-      ).data
-    )
+    if (e instanceof CallExecutionError) {
+      const gasError = e.walk((e) => e instanceof RpcRequestError)
+
+      if (gasError === null) throw e
+
+      return decodeSafeTxGas(
+        (
+          gasError?.cause as {
+            data: Hex
+          }
+        ).data
+      )
+    } else throw e
   }
 }
