@@ -1,27 +1,11 @@
-import type {
-  Account,
-  Address,
-  Chain,
-  Hash,
-  Hex,
-  Transport,
-  WalletClient,
-} from 'viem'
-import {
-  bufferToHex,
-  ecrecover,
-  pubToAddress,
-} from '../../utils/ethereum-utils.js'
+import type { Account, Address, Chain, Hash, Hex, Transport, WalletClient } from 'viem'
+import { bufferToHex, ecrecover, pubToAddress } from '../../utils/ethereum-utils.js'
 
 function sameString(str1: string, str2: string): boolean {
   return str1.toLowerCase() === str2.toLowerCase()
 }
 
-function isTxHashSignedWithPrefix(
-  txHash: Hash,
-  signature: string,
-  ownerAddress: Address
-): boolean {
+function isTxHashSignedWithPrefix(txHash: Hash, signature: string, ownerAddress: Address): boolean {
   let hasPrefix
   try {
     const rsvSig = {
@@ -29,12 +13,7 @@ function isTxHashSignedWithPrefix(
       s: Buffer.from(signature.slice(66, 130), 'hex'),
       v: BigInt(parseInt(signature.slice(130, 132), 16)),
     }
-    const recoveredData = ecrecover(
-      Buffer.from(txHash.slice(2), 'hex'),
-      rsvSig.v,
-      rsvSig.r,
-      rsvSig.s
-    )
+    const recoveredData = ecrecover(Buffer.from(txHash.slice(2), 'hex'), rsvSig.v, rsvSig.r, rsvSig.s)
     const recoveredAddress = bufferToHex(pubToAddress(recoveredData))
     hasPrefix = !sameString(recoveredAddress, ownerAddress)
   } catch (e) {
@@ -71,11 +50,7 @@ const adjustVInSignature = (
       signatureV += MIN_VALID_V_VALUE_FOR_SAFE_ECDSA
     }
     const adjustedSignature = signature.slice(0, -2) + signatureV.toString(16)
-    const signatureHasPrefix = isTxHashSignedWithPrefix(
-      safeTxHash,
-      adjustedSignature,
-      signerAddress
-    )
+    const signatureHasPrefix = isTxHashSignedWithPrefix(safeTxHash, adjustedSignature, signerAddress)
     if (signatureHasPrefix) {
       signatureV += 4
     }
@@ -85,8 +60,8 @@ const adjustVInSignature = (
   return signature
 }
 
-export const signSafeTransactionHash = async <TAccount extends Account>(
-  client: WalletClient<Transport, Chain, TAccount>,
+export const signSafeTransactionHash = async (
+  client: WalletClient<Transport, Chain, Account>,
   hash: Hash
 ): Promise<Hex> => {
   const signerAddress = client.account.address

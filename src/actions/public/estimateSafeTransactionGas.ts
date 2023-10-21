@@ -1,30 +1,12 @@
-import {
-  Address,
-  Hex,
-  PublicClient,
-  Transport,
-  encodeFunctionData,
-  CallExecutionError,
-  RpcRequestError,
-} from 'viem'
-import {
-  simulateTxAccessorAbi,
-  safeAbi,
-  simulateTxAccessorAddress,
-} from '../../constants.js'
-import type {
-  SafeTransactionData,
-  SafeTransactionDataPartial,
-} from '../../types.js'
+import { Address, Hex, PublicClient, Transport, encodeFunctionData, CallExecutionError, RpcRequestError } from 'viem'
+import { simulateTxAccessorAbi, safeAbi, simulateTxAccessorAddress } from '../../constants.js'
+import type { SafeTransactionData, SafeTransactionDataPartial } from '../../types.js'
 
 function decodeSafeTxGas(data: Hex): bigint {
   return BigInt('0x' + data.slice(184).slice(0, 10))
 }
 
-export type EstimateSafeTransactionGasArgs = Pick<
-  SafeTransactionData,
-  'to' | 'operation'
-> &
+export type EstimateSafeTransactionGasArgs = Pick<SafeTransactionData, 'to' | 'operation'> &
   Pick<SafeTransactionDataPartial, 'value' | 'data'>
 
 export const estimateSafeTransactionGas = async (

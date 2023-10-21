@@ -1,16 +1,21 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext", "DOM"],
     "module": "NodeNext",
     "target": "ESNext",
     "moduleResolution": "NodeNext",
-    "moduleDetection": "force",
     "strict": true,
     "downlevelIteration": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["bun-types"],
     "noImplicitAny": true,
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "declaration": true,
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "paths": {
+      "viem": ["./node_modules/viem/"]
+    }
+  },
+  "include": ["src"]
 }

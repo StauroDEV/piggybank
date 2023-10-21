@@ -1,12 +1,25 @@
 {
   "name": "piggybank",
-  "module": "./dist/index.js",
   "type": "module",
-  "exports": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    "./actions": {
+      "types": "./dist/actions.d.ts",
+      "import": "./dist/actions.js"
+    },
+    "./api": {
+      "types": "./dist/api.d.ts",
+      "import": "./dist/api.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    }
+  },
   "devDependencies": {
     "@types/semver": "^7.5.3",
-    "bun-types": "latest"
+    "bun-types": "latest",
+    "globby": "^13.2.2",
+    "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -16,5 +29,9 @@
     "ethereum-cryptography": "^2.1.2",
     "semver": "^7.5.4",
     "viem": "^1.16.5"
+  },
+  "scripts": {
+    "postbuild": "tsc --emitDeclarationOnly",
+    "build": "bun build.ts"
   }
 }
