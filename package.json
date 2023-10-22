@@ -19,16 +19,15 @@
     "@types/semver": "^7.5.3",
     "bun-types": "latest",
     "globby": "^13.2.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "viem": "^1.16.6"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "viem": ">=1.16"
   },
   "dependencies": {
-    "devalue": "^4.3.2",
     "ethereum-cryptography": "^2.1.2",
-    "semver": "^7.5.4",
-    "viem": "^1.16.5"
+    "semver": "^7.5.4"
   },
   "scripts": {
     "postbuild": "tsc --emitDeclarationOnly",

@@ -1,24 +1,17 @@
 # piggybank
 
-A super-lightweight unofficial SDK for Safe Global, powered by viem.
+(unofficial) [Safe](https://safe.global) library, powered by [viem](https://viem.sh).
 
-> At the moment only Safe v1.3 is supported
+> only Safe v1.3 is supported at the moment
 
-## Examples
+## Features
 
-### Submitting a transaction to a Safe wallet
+- All kits in one package
+- TypeScript-ready
+- Makes it possible to interact with Safe using [viem](https://viem.sh), since Safe Protocol Kit and API Kit only support web3 and ethers.
 
-```ts
-import { ApiClient } from 'piggybank/api'
-import { publicSafeActions } from 'piggybank/actions'
-import { createWalletClient } from 'viem'
+## Install
 
-const client = new ApiClient({ url: '' })
-
-const publicClient = createPublicClient({
-  transport: http(),
-  chain: goerli,
-}).extend(publicSafeActions(safeAddress))
-
-await client.proposeTransaction({})
+```sh
+bun add viem piggybank
 ```

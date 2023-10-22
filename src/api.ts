@@ -1,5 +1,5 @@
 import type { Address, Hex, Hash } from 'viem'
-import type { SafeTransactionData } from './types.js'
+import type { SafeTransactionData, SafeTransactionRequiredProps } from './types.js'
 import { getEip3770Address } from './utils/eip-3770.js'
 
 Object.defineProperty(BigInt.prototype, 'toJSON', {
@@ -62,13 +62,11 @@ export async function sendRequest<T>({
     throw new Error(jsonResponse.delegator)
   }
 
-  throw new Error(
-    `${response.statusText}\n${JSON.stringify(jsonResponse, null, 2)}`
-  )
+  throw new Error(`${response.statusText}\n${JSON.stringify(jsonResponse, null, 2)}`)
 }
 
 type ProposeTransactionProps = {
-  safeTransactionData: SafeTransactionData
+  safeTransactionData: SafeTransactionRequiredProps
   safeTxHash: Hash
   senderAddress: `${string}:${Address}` | Address
   senderSignature: Hex
@@ -79,13 +77,7 @@ type ProposeTransactionProps = {
 export class ApiClient {
   #url: URL | string
   safeAddress: Address
-  constructor({
-    url,
-    safeAddress,
-  }: {
-    url: URL | string
-    safeAddress: Address
-  }) {
+  constructor({ url, safeAddress }: { url: URL | string; safeAddress: Address }) {
     this.#url = new URL('/api', url)
     this.safeAddress = safeAddress
   }
