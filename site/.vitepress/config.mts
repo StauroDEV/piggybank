@@ -32,6 +32,10 @@ export default defineConfig({
             text: 'estimateSafeTransactionGas',
             link: '/docs/actions/public/estimateSafeTransactionGas',
           },
+          {
+            text: 'getSafeTransactionHash',
+            link: '/docs/actions/public/getSafeTransactionHash',
+          },
         ],
       },
       {
@@ -39,18 +43,13 @@ export default defineConfig({
         items: [
           {
             text: 'signSafeTransactionHash',
-            link: '/docs/actions/public/estimateSafeTransactionBaseGas',
+            link: '/docs/actions/wallet/signSafeTransactionHash',
           },
         ],
       },
       {
-        text: 'Glossary',
-        items: [
-          {
-            text: 'Types',
-            link: '/docs/glossary/types',
-          },
-        ],
+        text: 'API Client',
+        link: '/docs/api',
       },
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/StauroXYZ/piggybank' }],

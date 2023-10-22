@@ -38,11 +38,7 @@ const setLengthLeft = (msg: Uint8Array, length: number): Uint8Array => {
   return setLength(msg, length, false)
 }
 
-const setLength = (
-  msg: Uint8Array,
-  length: number,
-  right: boolean
-): Uint8Array => {
+const setLength = (msg: Uint8Array, length: number, right: boolean): Uint8Array => {
   if (right) {
     if (msg.length < length) {
       return new Uint8Array([...msg, ...zeros(length - msg.length)])
@@ -85,28 +81,19 @@ export const ecrecover = function (
     throw new Error('Invalid signature v value')
   }
 
-  const sig = secp256k1.Signature.fromCompact(signature).addRecoveryBit(
-    Number(recovery)
-  )
+  const sig = secp256k1.Signature.fromCompact(signature).addRecoveryBit(Number(recovery))
   const senderPubKey = sig.recoverPublicKey(msgHash)
   return senderPubKey.toRawBytes(false).slice(1)
 }
 export function bufferToHex(buffer: Buffer | Uint8Array) {
-  const hexArray = Array.from(buffer, (byte) =>
-    byte.toString(16).padStart(2, '0')
-  )
+  const hexArray = Array.from(buffer, (byte) => byte.toString(16).padStart(2, '0'))
   return '0x' + hexArray.join('')
 }
 
-export const pubToAddress = function (
-  pubKey: Uint8Array,
-  sanitize: boolean = false
-): Uint8Array {
+export const pubToAddress = function (pubKey: Uint8Array, sanitize: boolean = false): Uint8Array {
   assertIsBytes(pubKey)
   if (sanitize && pubKey.length !== 64) {
-    pubKey = secp256k1.ProjectivePoint.fromHex(pubKey)
-      .toRawBytes(false)
-      .slice(1)
+    pubKey = secp256k1.ProjectivePoint.fromHex(pubKey).toRawBytes(false).slice(1)
   }
   if (pubKey.length !== 64) {
     throw new Error('Expected pubKey to be of length 64')

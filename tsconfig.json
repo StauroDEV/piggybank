@@ -13,9 +13,7 @@
     "declaration": true,
     "outDir": "dist",
     "declarationDir": "dist",
-    "paths": {
-      "viem": ["./node_modules/viem/"]
-    }
+    "rootDir": "src"
   },
-  "include": ["src", "example"]
+  "include": ["src"]
 }

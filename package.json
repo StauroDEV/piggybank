@@ -16,6 +16,7 @@
     }
   },
   "devDependencies": {
+    "@types/node": "^20.8.7",
     "@types/semver": "^7.5.3",
     "bun-types": "latest",
     "globby": "^13.2.2",
