@@ -25,7 +25,7 @@ pnpm i viem piggybank
 ```
 
 ```bash [bun]
-bun i viem piggybank
+bun add viem piggybank
 ```
 
 :::

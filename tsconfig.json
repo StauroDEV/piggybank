@@ -11,9 +11,7 @@
     "noImplicitAny": true,
     "resolveJsonModule": true,
     "declaration": true,
-    "outDir": "dist",
-    "declarationDir": "dist",
-    "rootDir": "src"
+    "outDir": "dist"
   },
-  "include": ["src"]
+  "include": ["src", "example"]
 }

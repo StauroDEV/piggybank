@@ -50,6 +50,12 @@ export default defineConfig({
       {
         text: 'API Client',
         link: '/docs/api',
+        items: [
+          {
+            text: 'proposeTransaction',
+            link: '/docs/api/proposeTransaction',
+          },
+        ],
       },
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/StauroXYZ/piggybank' }],

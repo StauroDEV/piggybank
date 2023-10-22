@@ -16,3 +16,5 @@ export const publicSafeActions = (safeAddress: Address): ((client: PublicClient)
     estimateSafeTransactionBaseGas: (args) => estimateSafeTransactionBaseGas(client, safeAddress, args),
   })
 }
+
+export { estimateSafeTransactionBaseGas, estimateSafeTransactionGas, getSafeTransactionHash }

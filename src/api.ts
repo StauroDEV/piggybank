@@ -1,5 +1,5 @@
 import type { Address, Hex, Hash } from 'viem'
-import type { SafeTransactionData, SafeTransactionRequiredProps } from './types.js'
+import type { SafeTransactionRequiredProps } from './types.js'
 import { getEip3770Address } from './utils/eip-3770.js'
 
 Object.defineProperty(BigInt.prototype, 'toJSON', {

@@ -31,7 +31,6 @@
     "semver": "^7.5.4"
   },
   "scripts": {
-    "postbuild": "tsc --emitDeclarationOnly",
-    "build": "bun build.ts"
+    "build": "tsc -p tsconfig.build.json"
   }
 }

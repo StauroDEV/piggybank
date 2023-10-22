@@ -10,3 +10,5 @@ export const walletSafeActions = (): ((client: WalletClient<Transport, Chain, Ac
     signSafeTransactionHash: (args) => signSafeTransactionHash(client, args),
   })
 }
+
+export { signSafeTransactionHash }
