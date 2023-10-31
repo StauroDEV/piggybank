@@ -12,7 +12,7 @@ export type EstimateSafeTransactionGasArgs = Pick<SafeTransactionData, 'to' | 'o
 export const estimateSafeTransactionGas = async (
   client: PublicClient<Transport>,
   safeAddress: Address,
-  { to, data, operation, value }: EstimateSafeTransactionGasArgs
+  { to, data, operation, value }: EstimateSafeTransactionGasArgs,
 ): Promise<bigint> => {
   const transactionDataToEstimate = encodeFunctionData({
     abi: simulateTxAccessorAbi,
@@ -47,7 +47,7 @@ export const estimateSafeTransactionGas = async (
           gasError?.cause as {
             data: Hex
           }
-        ).data
+        ).data,
       )
     } else throw e
   }

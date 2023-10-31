@@ -48,7 +48,7 @@ export type EstimateSafeTransactionBaseGasArgs = Pick<SafeTransactionData, 'to' 
 export const estimateSafeTransactionBaseGas = async (
   publicClient: PublicClient<Transport>,
   safeAddress: Address,
-  { safeTxGas, gasToken, refundReceiver, to, operation, value, data }: EstimateSafeTransactionBaseGasArgs
+  { safeTxGas, gasToken, refundReceiver, to, operation, value, data }: EstimateSafeTransactionBaseGasArgs,
 ): Promise<bigint> => {
   const encodeSafeTxGas = safeTxGas || 0n
   const encodeBaseGas = 0n

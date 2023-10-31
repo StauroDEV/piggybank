@@ -80,7 +80,7 @@ export interface GenerateTypedData {
     gasPrice: bigint
     gasToken: Address
     refundReceiver: string
-    nonce: number
+    nonce: bigint
   }
 }
 

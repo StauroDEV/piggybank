@@ -5,10 +5,7 @@ export type SignSafeTransactionHashArgs = Pick<
   SafeTransactionData,
   'to' | 'operation' | 'gasPrice' | 'safeTxGas' | 'baseGas'
 > &
-  Pick<
-    SafeTransactionDataPartial,
-    'value' | 'data' | 'gasToken' | 'refundReceiver' | 'nonce'
-  >
+  Pick<SafeTransactionDataPartial, 'value' | 'data' | 'gasToken' | 'refundReceiver' | 'nonce'>
 
 export const generateSafeTransactionSignature = async (
   client: WalletClient<Transport, Chain, Account>,
@@ -24,34 +21,34 @@ export const generateSafeTransactionSignature = async (
     gasToken,
     refundReceiver,
     nonce,
-  }: SignSafeTransactionHashArgs
+  }: SignSafeTransactionHashArgs,
 ): Promise<Hex> => {
   return await client.signTypedData({
     types: {
       EIP712Domain: [
         {
-          type: "uint256",
-          name: "chainId",
+          type: 'uint256',
+          name: 'chainId',
         },
         {
-          type: "address",
-          name: "verifyingContract",
+          type: 'address',
+          name: 'verifyingContract',
         },
       ],
       SafeTx: [
-        { name: "to", type: "address" },
-        { name: "value", type: "uint256" },
-        { name: "data", type: "bytes" },
-        { name: "operation", type: "uint8" },
-        { name: "safeTxGas", type: "uint256" },
-        { name: "baseGas", type: "uint256" },
-        { name: "gasPrice", type: "uint256" },
-        { name: "gasToken", type: "address" },
-        { name: "refundReceiver", type: "address" },
-        { name: "nonce", type: "uint256" },
+        { name: 'to', type: 'address' },
+        { name: 'value', type: 'uint256' },
+        { name: 'data', type: 'bytes' },
+        { name: 'operation', type: 'uint8' },
+        { name: 'safeTxGas', type: 'uint256' },
+        { name: 'baseGas', type: 'uint256' },
+        { name: 'gasPrice', type: 'uint256' },
+        { name: 'gasToken', type: 'address' },
+        { name: 'refundReceiver', type: 'address' },
+        { name: 'nonce', type: 'uint256' },
       ],
     },
-    primaryType: "SafeTx",
+    primaryType: 'SafeTx',
     domain: {
       chainId: BigInt(client.chain.id),
       verifyingContract: safeAddress,
@@ -59,7 +56,7 @@ export const generateSafeTransactionSignature = async (
     message: {
       to: to,
       value: value ?? 0n,
-      data: data ?? "0x",
+      data: data ?? '0x',
       operation: operation ?? 0,
       safeTxGas: safeTxGas ?? 0,
       baseGas: baseGas ?? 0,
@@ -69,5 +66,4 @@ export const generateSafeTransactionSignature = async (
       nonce: nonce ?? 0n,
     },
   })
-
 }

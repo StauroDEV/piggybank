@@ -1,11 +1,7 @@
-import {
-  MetaTransactionData,
-  OperationType,
-  SafeTransactionData,
-} from '../types.js'
+import { MetaTransactionData, OperationType, SafeTransactionData } from '../types.js'
 
 export function standardizeMetaTransactionData(
-  tx: NonNullable<SafeTransactionData | MetaTransactionData>
+  tx: NonNullable<SafeTransactionData | MetaTransactionData>,
 ): MetaTransactionData {
   const standardizedTxs: MetaTransactionData = {
     ...tx,

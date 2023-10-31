@@ -5,7 +5,9 @@ export type WalletSafeActions = {
   generateSafeTransactionSignature: (hash: SignSafeTransactionHashArgs) => Promise<Hex>
 }
 
-export const walletSafeActions = (safeAddress: Address): ((client: WalletClient<Transport, Chain, Account>) => WalletSafeActions) => {
+export const walletSafeActions = (
+  safeAddress: Address,
+): ((client: WalletClient<Transport, Chain, Account>) => WalletSafeActions) => {
   return (client) => ({
     generateSafeTransactionSignature: (args) => generateSafeTransactionSignature(client, safeAddress, args),
   })

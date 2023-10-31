@@ -16,10 +16,7 @@ const SAFE_FEATURES_BY_VERSION: Record<SAFE_FEATURES, string> = {
   [SAFE_FEATURES.ACCOUNT_ABSTRACTION]: '>=1.3.0',
 }
 
-export const hasSafeFeature = (
-  feature: SAFE_FEATURES,
-  version: string
-): boolean => {
+export const hasSafeFeature = (feature: SAFE_FEATURES, version: string): boolean => {
   if (!(feature in SAFE_FEATURES_BY_VERSION)) {
     return false
   }
