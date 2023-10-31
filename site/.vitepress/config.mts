@@ -4,9 +4,6 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'Piggybank',
   description: 'An unofficial Safe library',
-  // TODO remove
-  ignoreDeadLinks: true,
-
   themeConfig: {
     nav: [{ text: 'Docs', link: '/' }],
     search: {
@@ -36,6 +33,10 @@ export default defineConfig({
             text: 'getSafeTransactionHash',
             link: '/docs/actions/public/getSafeTransactionHash',
           },
+          {
+            text: 'getSafeNonce',
+            link: '/docs/actions/public/getSafeNonce',
+          }
         ],
       },
       {
