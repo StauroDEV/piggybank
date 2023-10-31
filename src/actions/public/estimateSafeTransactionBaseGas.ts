@@ -1,6 +1,7 @@
 import { Address, Hex, PublicClient, Transport, encodeFunctionData, zeroAddress } from 'viem'
 import { SafeTransactionData, SafeTransactionDataPartial } from '../../types.js'
 import { safeAbi } from '../../constants.js'
+import { getSafeNonce } from './getSafeNonce.js'
 
 // Every byte == 00 -> 4  Gas cost
 const CALL_DATA_ZERO_BYTE_GAS_COST = 4
@@ -73,13 +74,7 @@ export const estimateSafeTransactionBaseGas = async (
     ],
   })
 
-  const safeNonce = await publicClient.readContract({
-    abi: safeAbi,
-    functionName: 'nonce',
-    address: safeAddress,
-  })
-
-  console.log(safeNonce)
+  const safeNonce = await getSafeNonce(publicClient, safeAddress)
 
   const isSafeInitialized = safeNonce !== 0n
   const incrementNonceGasCost = isSafeInitialized ? INCREMENT_NONCE_GAS_COST : INITIZATION_GAS_COST

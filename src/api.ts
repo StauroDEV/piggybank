@@ -72,6 +72,7 @@ type ProposeTransactionProps = {
   senderSignature: Hex
   origin?: string
   chainId: number
+  nonce: bigint
 }
 
 export class ApiClient {
@@ -87,7 +88,7 @@ export class ApiClient {
     safeTxHash,
     origin,
     senderSignature,
-    chainId,
+    chainId, nonce,
   }: ProposeTransactionProps) {
     const safe = await getEip3770Address({
       fullAddress: this.safeAddress,
@@ -105,9 +106,9 @@ export class ApiClient {
       body: {
         ...safeTransactionData,
         contractTransactionHash: safeTxHash,
-        sender,
+        sender: sender.address,
         signature: senderSignature,
-        origin,
+        origin, nonce
       },
     })
   }
