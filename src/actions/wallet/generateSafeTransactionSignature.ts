@@ -26,7 +26,6 @@ export const generateSafeTransactionSignature = async (
     nonce,
   }: SignSafeTransactionHashArgs
 ): Promise<Hex> => {
-  const signerAddress = client.account.address
   return await client.signTypedData({
     types: {
       EIP712Domain: [

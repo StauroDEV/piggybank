@@ -1,4 +1,4 @@
-import { http, createPublicClient, parseEther, getAddress, createWalletClient, Hex, recoverMessageAddress } from 'viem'
+import { http, createPublicClient, parseEther, getAddress, createWalletClient, Hex } from 'viem'
 import { goerli } from 'viem/chains'
 import { publicSafeActions, walletSafeActions } from '../src/actions.js'
 import { OperationType } from '../src/types.js'

@@ -1,4 +1,4 @@
-import { Account, Address, Chain, Hash, Hex, Transport, WalletClient } from 'viem'
+import { Account, Address, Chain, Hex, Transport, WalletClient } from 'viem'
 import { SignSafeTransactionHashArgs, generateSafeTransactionSignature } from './generateSafeTransactionSignature.js'
 
 export type WalletSafeActions = {

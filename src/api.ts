@@ -27,6 +27,7 @@ export async function sendRequest<T>({
     body: JSON.stringify(body),
   })
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let jsonResponse: any
   try {
     jsonResponse = await response.json()
