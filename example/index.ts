@@ -12,6 +12,13 @@ const publicClient = createPublicClient({
   chain: goerli,
 }).extend(publicSafeActions(safeAddress))
 
+const walletClient = createWalletClient({
+  transport: http(),
+  chain: goerli,
+  account: privateKeyToAccount(process.env.PK as Hex),
+}).extend(walletSafeActions(safeAddress))
+
+
 const txData = {
   to: getAddress(process.env.TO_ADDRESS as Hex),
   value: parseEther('0.001'),
@@ -26,12 +33,6 @@ const baseGas = await publicClient.estimateSafeTransactionBaseGas({ ...txData, s
 const nonce = await publicClient.getSafeNonce()
 
 const safeTxHash = await publicClient.getSafeTransactionHash({ ...txData, safeTxGas, baseGas, nonce })
-
-const walletClient = createWalletClient({
-  transport: http(),
-  chain: goerli,
-  account: privateKeyToAccount(process.env.PK as Hex),
-}).extend(walletSafeActions(safeAddress))
 
 const senderSignature = await walletClient.generateSafeTransactionSignature({
   ...txData,

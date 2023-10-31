@@ -44,12 +44,19 @@ const safeTxGas = await publicClient.estimateSafeTransactionGas(txData)
 const baseGas = await publicClient.estimateSafeTransactionBaseGas({ ...txData, safeTxGas })
 ```
 
-### 4. Get the transaction hash and signature
+### 4. Get nonce, transaction hash and signature
 
 ```ts
-const safeTxHash = await publicClient.getSafeTransactionHash({ ...txData, safeTxGas, baseGas })
+const nonce = await publicClient.getSafeNonce()
 
-const senderSignature = await walletClient.generateSafeTransactionSignature(safeTxHash)
+const safeTxHash = await publicClient.getSafeTransactionHash({ ...txData, safeTxGas, baseGas, nonce })
+
+const senderSignature = await walletClient.generateSafeTransactionSignature({
+  ...txData,
+  nonce,
+  safeTxGas,
+  baseGas,
+})
 ```
 
 ### 5. Propose the transaction
