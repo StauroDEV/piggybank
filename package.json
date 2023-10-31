@@ -1,5 +1,6 @@
 {
   "name": "piggybank",
+  "version": "0.0.0",
   "type": "module",
   "exports": {
     "./actions": {
@@ -15,6 +16,9 @@
       "import": "./dist/types.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@types/node": "^20.8.7",
     "@types/semver": "^7.5.3",
