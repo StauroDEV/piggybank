@@ -3,7 +3,7 @@
 Estimate a Safe transaction base gas.
 
 ```ts
-import { publicSafeActions } from 'piggybank'
+import { publicSafeActions } from 'piggybank/actions'
 import { createPublicClient, parseEther } from 'viem'
 
 const txData = {
@@ -15,5 +15,5 @@ const txData = {
   nonce: 0,
 }
 
-const safeTxGas = await publicClient.estimateSafeTransactionGas(txData) // Estimate safe tx gas
+const safeTxGas = await estimateSafeTransactionGas(client, safeAddress, txData) // Estimate safe tx gas
 ```
