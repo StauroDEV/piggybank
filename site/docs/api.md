@@ -3,7 +3,7 @@
 Safe API Client is a lightweight replacement of [Safe API Kit](https://docs.safe.global/safe-core-aa-sdk/api-kit), included into piggybank by default.
 
 ::: warning
-Currently only a fraction of the API kit is implemented.
+API Client is in progress.
 :::
 
 ## Import
