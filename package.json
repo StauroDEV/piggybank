@@ -22,7 +22,10 @@
     "@typescript-eslint/parser": "^6.9.1",
     "bun-types": "latest",
     "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "globby": "^13.2.2",
+    "prettier": "^3.0.3",
     "tsx": "^3.14.0",
     "typescript": "^5.2.2",
     "viem": "^1.18.1"

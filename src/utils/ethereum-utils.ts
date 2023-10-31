@@ -3,6 +3,7 @@
  */
 import { keccak_256 as keccak256 } from "@noble/hashes/sha3";
 import * as secp256k1 from '@noble/secp256k1'
+import type { Buffer } from "node:buffer";
 
 const BIGINT_0 = BigInt(0)
 const BIGINT_1 = BigInt(1)
