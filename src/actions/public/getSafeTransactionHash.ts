@@ -50,7 +50,7 @@ export const getSafeTransactionHash = async (
       gasPrice,
       gasToken ?? zeroAddress,
       refundReceiver ?? zeroAddress,
-      BigInt(nonce || 0),
+      nonce || 0n,
     ],
   })
 }

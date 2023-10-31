@@ -100,16 +100,20 @@ export class ApiClient {
       chainId,
     })
 
+    const body = {
+      ...safeTransactionData,
+      contractTransactionHash: safeTxHash,
+      sender: sender.address,
+      signature: senderSignature,
+      origin, nonce
+    }
+
+    // console.log(JSON.stringify(body, null, 2))
+
     return sendRequest({
       url: `${this.#url}/v1/safes/${safe.address}/multisig-transactions/`,
       method: 'POST',
-      body: {
-        ...safeTransactionData,
-        contractTransactionHash: safeTxHash,
-        sender: sender.address,
-        signature: senderSignature,
-        origin, nonce
-      },
+      body,
     })
   }
 }

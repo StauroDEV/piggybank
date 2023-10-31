@@ -42,8 +42,8 @@ export default defineConfig({
         text: 'Wallet Actions',
         items: [
           {
-            text: 'signSafeTransactionHash',
-            link: '/docs/actions/wallet/signSafeTransactionHash',
+            text: 'generateSafeTransactionSignature',
+            link: '/docs/actions/wallet/generateSafeTransactionSignature',
           },
         ],
       },

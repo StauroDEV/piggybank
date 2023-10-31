@@ -21,7 +21,7 @@ export interface SafeTransactionData extends MetaTransactionData {
   gasPrice: bigint
   gasToken: Address
   refundReceiver: Address
-  nonce: number
+  nonce: bigint
 }
 
 export type SafeTransactionDataPartial = Partial<SafeTransactionData>

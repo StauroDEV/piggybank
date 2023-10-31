@@ -1,14 +1,14 @@
-import { Account, Chain, Hash, Hex, Transport, WalletClient } from 'viem'
-import { signSafeTransactionHash } from './signSafeTransactionHash.js'
+import { Account, Address, Chain, Hash, Hex, Transport, WalletClient } from 'viem'
+import { SignSafeTransactionHashArgs, generateSafeTransactionSignature } from './generateSafeTransactionSignature.js'
 
 export type WalletSafeActions = {
-  signSafeTransactionHash: (hash: Hash) => Promise<Hex>
+  generateSafeTransactionSignature: (hash: SignSafeTransactionHashArgs) => Promise<Hex>
 }
 
-export const walletSafeActions = (): ((client: WalletClient<Transport, Chain, Account>) => WalletSafeActions) => {
+export const walletSafeActions = (safeAddress: Address): ((client: WalletClient<Transport, Chain, Account>) => WalletSafeActions) => {
   return (client) => ({
-    signSafeTransactionHash: (args) => signSafeTransactionHash(client, args),
+    generateSafeTransactionSignature: (args) => generateSafeTransactionSignature(client, safeAddress, args),
   })
 }
 
-export { signSafeTransactionHash }
+export { generateSafeTransactionSignature }

@@ -26,14 +26,13 @@ const walletClient = createWalletClient({
 ### 2. Set up base transaction data
 
 ```ts
-import { parseEther, getAddress } from 'viem'
+import { parseEther, getAddress, type Hex } from 'viem'
 
 const txData = {
-  to: getAddress('0x_RECIPIENT_ADDRESS'),
+  to: getAddress(process.env.TO_ADDRESS as Hex),
   value: parseEther('0.001'),
   operation: OperationType.Call,
   gasPrice: await publicClient.getGasPrice(),
-  nonce: 0,
 }
 ```
 
@@ -50,7 +49,7 @@ const baseGas = await publicClient.estimateSafeTransactionBaseGas({ ...txData, s
 ```ts
 const safeTxHash = await publicClient.getSafeTransactionHash({ ...txData, safeTxGas, baseGas })
 
-const senderSignature = await walletClient.signSafeTransactionHash(safeTxHash)
+const senderSignature = await walletClient.generateSafeTransactionSignature(safeTxHash)
 ```
 
 ### 5. Propose the transaction
@@ -61,10 +60,12 @@ import { ApiClient } from 'piggybank/api'
 const apiClient = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', safeAddress })
 
 await apiClient.proposeTransaction({
-  safeTransactionData: { ...txData, safeTxGas, baseGas },
+  safeTransactionData: { ...txData, safeTxGas, baseGas, nonce },
   senderAddress: walletClient.account.address,
   safeTxHash,
   senderSignature,
   chainId: goerli.id,
+  origin: 'Piggybank',
+  nonce,
 })
 ```
