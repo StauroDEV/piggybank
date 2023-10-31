@@ -1,9 +1,8 @@
 /**
  * Re-exports from https://github.com/ethereumjs/ethereumjs-monorepo/blob/master/packages/util
  */
-
-import { keccak256 } from 'ethereum-cryptography/keccak.js'
-import { secp256k1 } from 'ethereum-cryptography/secp256k1.js'
+import { keccak_256 as keccak256 } from "@noble/hashes/sha3";
+import * as secp256k1 from '@noble/secp256k1'
 
 const BIGINT_0 = BigInt(0)
 const BIGINT_1 = BigInt(1)
