@@ -6,12 +6,13 @@
 
 ## Features
 
-- All kits in one package
-- TypeScript-ready
-- Makes it possible to interact with Safe using [viem](https://viem.sh), since Safe Protocol Kit and API Kit only support web3 and ethers.
+- Works with Viem (official SDK supports only ethers@5 and web3.js)
+- EIP3770 address support
+- Protocol Kit + API Kit included (both WIP)
+- Minimal deps
 
 ## Install
 
 ```sh
-bun add viem piggybank
+pnpm i viem piggybank
 ```
