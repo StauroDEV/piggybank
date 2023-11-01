@@ -15,7 +15,6 @@ export const estimateSafeTransactionGas = async (
   safeAddress: EIP3770Address | Address,
   { to: _to, data, operation, value, chainId }: EstimateSafeTransactionGasArgs,
 ): Promise<bigint> => {
-
   const { address: to } = getEip3770Address({ fullAddress: _to, chainId: chainId || client.chain!.id })
 
   const transactionDataToEstimate = encodeFunctionData({

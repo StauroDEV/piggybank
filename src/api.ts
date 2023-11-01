@@ -92,7 +92,6 @@ export class ApiClient {
     chainId,
     nonce,
   }: ProposeTransactionProps) {
-
     const { address: safeAddress } = getEip3770Address({
       fullAddress: this.safeAddress,
       chainId,
@@ -105,7 +104,7 @@ export class ApiClient {
 
     const { address: to } = getEip3770Address({
       fullAddress: safeTransactionData.to,
-      chainId
+      chainId,
     })
 
     const body = {
@@ -115,7 +114,7 @@ export class ApiClient {
       signature: senderSignature,
       origin,
       nonce,
-      to
+      to,
     }
 
     return sendRequest({

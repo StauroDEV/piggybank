@@ -4,7 +4,7 @@ import { getEip3770Address } from '../../utils/eip-3770.js'
 
 export type SignSafeTransactionHashArgs = ArgsWithChainId<
   Pick<SafeTransactionData, 'to' | 'operation' | 'gasPrice' | 'safeTxGas' | 'baseGas'> &
-  Pick<SafeTransactionDataPartial, 'value' | 'data' | 'gasToken' | 'refundReceiver' | 'nonce'>
+    Pick<SafeTransactionDataPartial, 'value' | 'data' | 'gasToken' | 'refundReceiver' | 'nonce'>
 >
 
 export const generateSafeTransactionSignature = async (
@@ -26,7 +26,6 @@ export const generateSafeTransactionSignature = async (
 ): Promise<Hex> => {
   const { address } = getEip3770Address({ fullAddress: safeAddress, chainId: chainId || client.chain!.id })
   const { address: to } = getEip3770Address({ fullAddress: _to, chainId: chainId || client.chain!.id })
-
 
   return await client.signTypedData({
     types: {

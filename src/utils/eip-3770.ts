@@ -39,7 +39,13 @@ function validateEip3770NetworkPrefix(prefix: string, currentChainId: number): v
   }
 }
 
-export function getEip3770Address({ fullAddress, chainId }: { fullAddress: string; chainId: number }): Eip3770AddressInterface {
+export function getEip3770Address({
+  fullAddress,
+  chainId,
+}: {
+  fullAddress: string
+  chainId: number
+}): Eip3770AddressInterface {
   console.log({ fullAddress })
   const { address, prefix } = parseEip3770Address(fullAddress)
   validateEthereumAddress(address)
@@ -48,4 +54,3 @@ export function getEip3770Address({ fullAddress, chainId }: { fullAddress: strin
   }
   return { address, prefix }
 }
-

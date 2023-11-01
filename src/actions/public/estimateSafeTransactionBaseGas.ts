@@ -45,7 +45,7 @@ function estimateDataGasCosts(data: Hex): number {
 
 export type EstimateSafeTransactionBaseGasArgs = ArgsWithChainId<
   Pick<SafeTransactionData, 'to' | 'operation'> &
-  Pick<SafeTransactionDataPartial, 'data' | 'value' | 'refundReceiver' | 'gasToken' | 'safeTxGas'>
+    Pick<SafeTransactionDataPartial, 'data' | 'value' | 'refundReceiver' | 'gasToken' | 'safeTxGas'>
 >
 
 export const estimateSafeTransactionBaseGas = async (

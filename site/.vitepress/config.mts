@@ -36,7 +36,7 @@ export default defineConfig({
           {
             text: 'getSafeNonce',
             link: '/docs/actions/public/getSafeNonce',
-          }
+          },
         ],
       },
       {

@@ -5,7 +5,6 @@ import { EIP3770Address, OperationType } from '../src/types.js'
 import { ApiClient } from '../src/api.js'
 import { privateKeyToAccount } from 'viem/accounts'
 
-
 const safeAddress = process.env.SAFE_ADDRESS as EIP3770Address
 
 const publicClient = createPublicClient({
@@ -18,7 +17,6 @@ const walletClient = createWalletClient({
   chain: goerli,
   account: privateKeyToAccount(process.env.PK as Hex),
 }).extend(walletSafeActions(safeAddress))
-
 
 const txData = {
   to: process.env.SAFE_TO as EIP3770Address,
@@ -35,12 +33,7 @@ const nonce = await publicClient.getSafeNonce()
 
 const safeTxHash = await publicClient.getSafeTransactionHash({ ...txData, safeTxGas, baseGas, nonce })
 
-const senderSignature = await walletClient.generateSafeTransactionSignature({
-  ...txData,
-  nonce,
-  safeTxGas,
-  baseGas
-})
+const senderSignature = await walletClient.generateSafeTransactionSignature({ ...txData, nonce, safeTxGas, baseGas })
 
 const apiClient = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', safeAddress })
 
@@ -51,5 +44,5 @@ await apiClient.proposeTransaction({
   senderSignature,
   chainId: goerli.id,
   origin: 'Piggybank',
-  nonce
+  nonce,
 })

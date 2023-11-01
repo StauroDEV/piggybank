@@ -5,7 +5,7 @@ import { getEip3770Address } from '../../utils/eip-3770.js'
 
 export type GetSafeTransactionHashArgs = ArgsWithChainId<
   Pick<SafeTransactionData, 'to' | 'operation' | 'gasPrice' | 'safeTxGas' | 'baseGas'> &
-  Pick<SafeTransactionDataPartial, 'value' | 'data' | 'gasToken' | 'refundReceiver' | 'nonce'>
+    Pick<SafeTransactionDataPartial, 'value' | 'data' | 'gasToken' | 'refundReceiver' | 'nonce'>
 >
 
 export const getSafeTransactionHash = async (
