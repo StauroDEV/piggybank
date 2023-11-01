@@ -14,5 +14,5 @@
 ## Install
 
 ```sh
-pnpm i viem piggybank
+pnpm i viem @stauro/piggybank
 ```
