@@ -46,7 +46,6 @@ export function getEip3770Address({
   fullAddress: string
   chainId: number
 }): Eip3770AddressInterface {
-  console.log({ fullAddress })
   const { address, prefix } = parseEip3770Address(fullAddress)
   validateEthereumAddress(address)
   if (prefix) {
