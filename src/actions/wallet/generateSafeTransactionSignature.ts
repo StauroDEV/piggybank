@@ -1,17 +1,17 @@
 import { zeroAddress, type Account, type Address, type Chain, type Hex, type Transport, type WalletClient } from 'viem'
-import { SafeTransactionData, SafeTransactionDataPartial } from '../../types.js'
+import { ArgsWithChainId, EIP3770Address, SafeTransactionData, SafeTransactionDataPartial } from '../../types.js'
+import { getEip3770Address } from '../../utils/eip-3770.js'
 
-export type SignSafeTransactionHashArgs = Pick<
-  SafeTransactionData,
-  'to' | 'operation' | 'gasPrice' | 'safeTxGas' | 'baseGas'
-> &
+export type SignSafeTransactionHashArgs = ArgsWithChainId<
+  Pick<SafeTransactionData, 'to' | 'operation' | 'gasPrice' | 'safeTxGas' | 'baseGas'> &
   Pick<SafeTransactionDataPartial, 'value' | 'data' | 'gasToken' | 'refundReceiver' | 'nonce'>
+>
 
 export const generateSafeTransactionSignature = async (
   client: WalletClient<Transport, Chain, Account>,
-  safeAddress: Address,
+  safeAddress: EIP3770Address | Address,
   {
-    to,
+    to: _to,
     value,
     data,
     operation,
@@ -21,8 +21,13 @@ export const generateSafeTransactionSignature = async (
     gasToken,
     refundReceiver,
     nonce,
+    chainId,
   }: SignSafeTransactionHashArgs,
 ): Promise<Hex> => {
+  const { address } = getEip3770Address({ fullAddress: safeAddress, chainId: chainId || client.chain!.id })
+  const { address: to } = getEip3770Address({ fullAddress: _to, chainId: chainId || client.chain!.id })
+
+
   return await client.signTypedData({
     types: {
       EIP712Domain: [
@@ -51,7 +56,7 @@ export const generateSafeTransactionSignature = async (
     primaryType: 'SafeTx',
     domain: {
       chainId: BigInt(client.chain.id),
-      verifyingContract: safeAddress,
+      verifyingContract: address,
     },
     message: {
       to: to,

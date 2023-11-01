@@ -1,11 +1,12 @@
-import { http, createPublicClient, parseEther, getAddress, createWalletClient, Hex } from 'viem'
+import { http, createPublicClient, parseEther, createWalletClient, Hex } from 'viem'
 import { goerli } from 'viem/chains'
 import { publicSafeActions, walletSafeActions } from '../src/actions.js'
-import { OperationType } from '../src/types.js'
+import { EIP3770Address, OperationType } from '../src/types.js'
 import { ApiClient } from '../src/api.js'
 import { privateKeyToAccount } from 'viem/accounts'
 
-const safeAddress = getAddress(process.env.SAFE_ADDRESS as Hex)
+
+const safeAddress = process.env.SAFE_ADDRESS as EIP3770Address
 
 const publicClient = createPublicClient({
   transport: http(),
@@ -20,7 +21,7 @@ const walletClient = createWalletClient({
 
 
 const txData = {
-  to: getAddress(process.env.TO_ADDRESS as Hex),
+  to: process.env.SAFE_TO as EIP3770Address,
   value: parseEther('0.001'),
   operation: OperationType.Call,
   gasPrice: await publicClient.getGasPrice(),

@@ -1,7 +1,8 @@
 import { Address, Hex, PublicClient, Transport, encodeFunctionData, zeroAddress } from 'viem'
-import { SafeTransactionData, SafeTransactionDataPartial } from '../../types.js'
+import { ArgsWithChainId, EIP3770Address, SafeTransactionData, SafeTransactionDataPartial } from '../../types.js'
 import { safeAbi } from '../../constants.js'
 import { getSafeNonce } from './getSafeNonce.js'
+import { getEip3770Address } from '../../utils/eip-3770.js'
 
 // Every byte == 00 -> 4  Gas cost
 const CALL_DATA_ZERO_BYTE_GAS_COST = 4
@@ -42,13 +43,15 @@ function estimateDataGasCosts(data: Hex): number {
   }, 0)
 }
 
-export type EstimateSafeTransactionBaseGasArgs = Pick<SafeTransactionData, 'to' | 'operation'> &
+export type EstimateSafeTransactionBaseGasArgs = ArgsWithChainId<
+  Pick<SafeTransactionData, 'to' | 'operation'> &
   Pick<SafeTransactionDataPartial, 'data' | 'value' | 'refundReceiver' | 'gasToken' | 'safeTxGas'>
+>
 
 export const estimateSafeTransactionBaseGas = async (
-  publicClient: PublicClient<Transport>,
-  safeAddress: Address,
-  { safeTxGas, gasToken, refundReceiver, to, operation, value, data }: EstimateSafeTransactionBaseGasArgs,
+  client: PublicClient<Transport>,
+  safeAddress: EIP3770Address | Address,
+  { safeTxGas, gasToken, refundReceiver, to: _to, operation, value, data, chainId }: EstimateSafeTransactionBaseGasArgs,
 ): Promise<bigint> => {
   const encodeSafeTxGas = safeTxGas || 0n
   const encodeBaseGas = 0n
@@ -56,6 +59,8 @@ export const estimateSafeTransactionBaseGas = async (
   const encodeGasToken = gasToken || zeroAddress
   const encodeRefundReceiver = refundReceiver || zeroAddress
   const signatures = '0x'
+
+  const { address: to } = getEip3770Address({ fullAddress: _to, chainId: chainId || client.chain!.id })
 
   const execTransactionData = encodeFunctionData({
     abi: safeAbi,
@@ -73,16 +78,17 @@ export const estimateSafeTransactionBaseGas = async (
       signatures,
     ],
   })
+  const { address } = getEip3770Address({ fullAddress: safeAddress, chainId: chainId || client.chain!.id })
 
-  const safeNonce = await getSafeNonce(publicClient, safeAddress)
+  const safeNonce = await getSafeNonce(client, address, { chainId })
 
   const isSafeInitialized = safeNonce !== 0n
   const incrementNonceGasCost = isSafeInitialized ? INCREMENT_NONCE_GAS_COST : INITIZATION_GAS_COST
 
-  const safeThreshold = await publicClient.readContract({
+  const safeThreshold = await client.readContract({
     abi: safeAbi,
     functionName: 'getThreshold',
-    address: safeAddress,
+    address,
   })
 
   const signaturesGasCost = safeThreshold * BigInt(GAS_COST_PER_SIGNATURE)

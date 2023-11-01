@@ -1,14 +1,14 @@
-import { isAddress } from 'viem/utils'
-import { Eip3770Address } from '../types.js'
+import { getAddress, isAddress } from 'viem/utils'
+import { Eip3770AddressInterface } from '../types.js'
 
 const networks = [
   { chainId: 1, shortName: 'eth' },
   { chainId: 5, shortName: 'gor' },
 ]
 
-function parseEip3770Address(fullAddress: string): Eip3770Address {
+function parseEip3770Address(fullAddress: string): Eip3770AddressInterface {
   const parts = fullAddress.split(':')
-  const address = parts.length > 1 ? parts[1] : parts[0]
+  const address = getAddress(parts.length > 1 ? parts[1] : parts[0])
   const prefix = parts.length > 1 ? parts[0] : ''
   return { prefix, address }
 }
@@ -39,21 +39,13 @@ function validateEip3770NetworkPrefix(prefix: string, currentChainId: number): v
   }
 }
 
-export function validateEip3770Address(fullAddress: string, currentChainId: number): Eip3770Address {
+export function getEip3770Address({ fullAddress, chainId }: { fullAddress: string; chainId: number }): Eip3770AddressInterface {
+  console.log({ fullAddress })
   const { address, prefix } = parseEip3770Address(fullAddress)
   validateEthereumAddress(address)
   if (prefix) {
-    validateEip3770NetworkPrefix(prefix, currentChainId)
+    validateEip3770NetworkPrefix(prefix, chainId)
   }
   return { address, prefix }
 }
 
-export async function getEip3770Address({
-  fullAddress,
-  chainId,
-}: {
-  fullAddress: string
-  chainId: number
-}): Promise<Eip3770Address> {
-  return validateEip3770Address(fullAddress, chainId)
-}

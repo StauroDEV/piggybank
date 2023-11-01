@@ -1,5 +1,5 @@
 import type { Address, Hex, Hash } from 'viem'
-import type { SafeTransactionRequiredProps } from './types.js'
+import type { EIP3770Address, SafeTransactionRequiredProps } from './types.js'
 import { getEip3770Address } from './utils/eip-3770.js'
 
 Object.defineProperty(BigInt.prototype, 'toJSON', {
@@ -78,8 +78,8 @@ type ProposeTransactionProps = {
 
 export class ApiClient {
   #url: URL | string
-  safeAddress: Address
-  constructor({ url, safeAddress }: { url: URL | string; safeAddress: Address }) {
+  safeAddress: EIP3770Address | Address
+  constructor({ url, safeAddress }: { url: URL | string; safeAddress: EIP3770Address | Address }) {
     this.#url = new URL('/api', url)
     this.safeAddress = safeAddress
   }
@@ -92,14 +92,20 @@ export class ApiClient {
     chainId,
     nonce,
   }: ProposeTransactionProps) {
-    const safe = await getEip3770Address({
+
+    const { address: safeAddress } = getEip3770Address({
       fullAddress: this.safeAddress,
       chainId,
     })
 
-    const sender = await getEip3770Address({
+    const sender = getEip3770Address({
       fullAddress: senderAddress,
       chainId,
+    })
+
+    const { address: to } = getEip3770Address({
+      fullAddress: safeTransactionData.to,
+      chainId
     })
 
     const body = {
@@ -109,12 +115,11 @@ export class ApiClient {
       signature: senderSignature,
       origin,
       nonce,
+      to
     }
 
-    // console.log(JSON.stringify(body, null, 2))
-
     return sendRequest({
-      url: `${this.#url}/v1/safes/${safe.address}/multisig-transactions/`,
+      url: `${this.#url}/v1/safes/${safeAddress}/multisig-transactions/`,
       method: 'POST',
       body,
     })
