@@ -22,7 +22,7 @@ const txData = {
   to: process.env.SAFE_TO as EIP3770Address,
   value: parseEther('0.001'),
   operation: OperationType.Call,
-  gasPrice: await publicClient.getGasPrice(),
+  gasPrice: 0n,
 }
 
 const safeTxGas = await publicClient.estimateSafeTransactionGas(txData)

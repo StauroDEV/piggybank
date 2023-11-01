@@ -32,7 +32,6 @@ const txData = {
   to: getAddress(process.env.TO_ADDRESS as Hex),
   value: parseEther('0.001'),
   operation: OperationType.Call,
-  gasPrice: await publicClient.getGasPrice(),
 }
 ```
 
