@@ -45,5 +45,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint --ext .ts ."
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
