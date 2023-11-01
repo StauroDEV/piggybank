@@ -17,15 +17,15 @@ piggybank is currently work in progress. Don't use in production.
 ::: code-group
 
 ```bash [npm]
-npm i viem piggybank
+npm i viem @stauro/piggybank
 ```
 
 ```bash [pnpm]
-pnpm i viem piggybank
+pnpm i viem @stauro/piggybank
 ```
 
 ```bash [bun]
-bun add viem piggybank
+bun add viem @stauro/piggybank
 ```
 
 :::

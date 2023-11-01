@@ -3,7 +3,7 @@
 Estimate a Safe transaction base gas.
 
 ```ts
-import { publicSafeActions } from 'piggybank/actions'
+import { publicSafeActions } from '@stauro/piggybank/actions'
 import { createPublicClient, parseEther } from 'viem'
 
 const txData = {

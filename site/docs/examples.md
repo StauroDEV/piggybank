@@ -7,7 +7,7 @@
 ```ts
 import { http, createPublicClient, parseEther, getAddress, createWalletClient, Hex } from 'viem'
 import { goerli } from 'viem/chains'
-import { publicSafeActions, walletSafeActions } from 'piggybank/actions'
+import { publicSafeActions, walletSafeActions } from '@stauro/piggybank/actions'
 
 const safeAddress = getAddress('0x_MY_SAFE_ADDRESS')
 
@@ -62,7 +62,7 @@ const senderSignature = await walletClient.generateSafeTransactionSignature({
 ### 5. Propose the transaction
 
 ```ts
-import { ApiClient } from 'piggybank/api'
+import { ApiClient } from '@stauro/piggybank/api'
 
 const apiClient = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', safeAddress })
 

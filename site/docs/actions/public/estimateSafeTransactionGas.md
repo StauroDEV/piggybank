@@ -3,7 +3,7 @@
 Estimate a Safe transaction gas by simulating the transaction and parsing the revert message.
 
 ```ts
-import { publicSafeActions } from 'piggybank/actions'
+import { publicSafeActions } from '@stauro/piggybank/actions'
 import { createPublicClient, parseEther } from 'viem'
 
 const txData = {

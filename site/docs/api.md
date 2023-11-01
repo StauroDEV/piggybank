@@ -9,7 +9,7 @@ API Client is in progress.
 ## Import
 
 ```js
-import { ApiClient } from 'piggybank/api'
+import { ApiClient } from '@stauro/piggybank/api'
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ import { ApiClient } from 'piggybank/api'
 To initalize the client you need to pass a Safe address and a service URL.
 
 ```js
-import { ApiClient } from 'piggybank/api'
+import { ApiClient } from '@stauro/piggybank/api'
 
 const apiClient = new ApiClient({
   url: 'https://safe-transaction-goerli.safe.global',
