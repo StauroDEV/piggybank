@@ -2,8 +2,7 @@ import { getAddress, isAddress } from 'viem/utils'
 import { Eip3770AddressInterface } from '../types.js'
 
 const networks = [
-  { chainId: 1, shortName: 'eth' },
-  { chainId: 5, shortName: 'gor' },
+  { chainId: 1, shortName: 'eth' }, { chainId: 5, shortName: 'gor' }
 ]
 
 function parseEip3770Address(fullAddress: string): Eip3770AddressInterface {
@@ -41,7 +40,7 @@ function validateEip3770NetworkPrefix(prefix: string, currentChainId: number): v
 
 export function getEip3770Address({
   fullAddress,
-  chainId,
+  chainId
 }: {
   fullAddress: string
   chainId: number

@@ -19,8 +19,10 @@ export const publicSafeActions = (
     estimateSafeTransactionGas: (args) => estimateSafeTransactionGas(client, safeAddress, args),
     getSafeTransactionHash: (args) => getSafeTransactionHash(client, safeAddress, args),
     estimateSafeTransactionBaseGas: (args) => estimateSafeTransactionBaseGas(client, safeAddress, args),
-    getSafeNonce: (args) => getSafeNonce(client, safeAddress, args),
+    getSafeNonce: (args) => getSafeNonce(client, safeAddress, args)
   })
 }
 
-export { estimateSafeTransactionBaseGas, estimateSafeTransactionGas, getSafeTransactionHash, getSafeNonce }
+export {
+  estimateSafeTransactionBaseGas, estimateSafeTransactionGas, getSafeTransactionHash, getSafeNonce 
+}

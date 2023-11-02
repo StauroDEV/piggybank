@@ -1,30 +1,30 @@
 import type { Address, Hex, Hash } from 'viem'
-import type { EIP3770Address, SafeTransactionRequiredProps } from './types.js'
+import type { EIP3770Address, SafeTransactionData, SafeTransactionDataPartial } from './types.js'
 import { getEip3770Address } from './utils/eip-3770.js'
 
 Object.defineProperty(BigInt.prototype, 'toJSON', {
   get() {
     'use strict'
     return () => String(this)
-  },
+  }
 })
 
 export async function sendRequest<T>({
   url,
   method,
-  body,
+  body
 }: {
   url: URL | string
   method: 'GET' | 'POST'
-  body: unknown
+  body?: unknown
 }): Promise<T> {
   const response = await fetch(url, {
     method,
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(body),
+    body: body ? JSON.stringify(body) : undefined
   })
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,21 +67,22 @@ export async function sendRequest<T>({
 }
 
 type ProposeTransactionProps = {
-  safeTransactionData: SafeTransactionRequiredProps
+  safeTransactionData: Omit<SafeTransactionData, 'value' |'data'> & Pick<SafeTransactionDataPartial, 'value' | 'data'>
   safeTxHash: Hash
   senderAddress: `${string}:${Address}` | Address
   senderSignature: Hex
   origin?: string
-  chainId: number
-  nonce: bigint
+  chainId?: number
 }
 
 export class ApiClient {
   #url: URL | string
   safeAddress: EIP3770Address | Address
-  constructor({ url, safeAddress }: { url: URL | string; safeAddress: EIP3770Address | Address }) {
+  chainId: number
+  constructor({ url, safeAddress, chainId }: { url: URL | string; safeAddress: EIP3770Address | Address, chainId: number }) {
     this.#url = new URL('/api', url)
     this.safeAddress = safeAddress
+    this.chainId = chainId
   }
   async proposeTransaction({
     safeTransactionData,
@@ -89,22 +90,21 @@ export class ApiClient {
     safeTxHash,
     origin,
     senderSignature,
-    chainId,
-    nonce,
+    chainId
   }: ProposeTransactionProps) {
     const { address: safeAddress } = getEip3770Address({
       fullAddress: this.safeAddress,
-      chainId,
+      chainId: chainId ?? this.chainId
     })
 
     const sender = getEip3770Address({
       fullAddress: senderAddress,
-      chainId,
+      chainId: chainId ?? this.chainId
     })
 
     const { address: to } = getEip3770Address({
       fullAddress: safeTransactionData.to,
-      chainId,
+      chainId: chainId ?? this.chainId
     })
 
     const body = {
@@ -113,14 +113,15 @@ export class ApiClient {
       sender: sender.address,
       signature: senderSignature,
       origin,
-      nonce,
       to,
+      value: safeTransactionData.value ?? 0n
     }
+  
 
     return sendRequest({
       url: `${this.#url}/v1/safes/${safeAddress}/multisig-transactions/`,
       method: 'POST',
-      body,
+      body
     })
   }
 }

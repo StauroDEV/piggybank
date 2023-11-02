@@ -44,8 +44,8 @@ function estimateDataGasCosts(data: Hex): number {
 }
 
 export type EstimateSafeTransactionBaseGasArgs = ArgsWithChainId<
-  Pick<SafeTransactionData, 'to' | 'operation'> &
-    Pick<SafeTransactionDataPartial, 'data' | 'value' | 'refundReceiver' | 'gasToken' | 'safeTxGas'>
+Pick<SafeTransactionData, 'to' | 'operation'> &
+Pick<SafeTransactionDataPartial, 'data' | 'value' | 'refundReceiver' | 'gasToken' | 'safeTxGas'>
 >
 
 export const estimateSafeTransactionBaseGas = async (
@@ -66,17 +66,8 @@ export const estimateSafeTransactionBaseGas = async (
     abi: safeAbi,
     functionName: 'execTransaction',
     args: [
-      to,
-      value ?? 0n,
-      data ?? '0x',
-      operation,
-      encodeSafeTxGas,
-      encodeBaseGas,
-      gasPrice,
-      encodeGasToken,
-      encodeRefundReceiver,
-      signatures,
-    ],
+      to, value ?? 0n, data ?? '0x', operation, encodeSafeTxGas, encodeBaseGas, gasPrice, encodeGasToken, encodeRefundReceiver, signatures
+    ]
   })
   const { address } = getEip3770Address({ fullAddress: safeAddress, chainId: chainId || client.chain!.id })
 
@@ -88,7 +79,7 @@ export const estimateSafeTransactionBaseGas = async (
   const safeThreshold = await client.readContract({
     abi: safeAbi,
     functionName: 'getThreshold',
-    address,
+    address
   })
 
   const signaturesGasCost = safeThreshold * BigInt(GAS_COST_PER_SIGNATURE)

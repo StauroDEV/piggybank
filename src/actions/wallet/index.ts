@@ -9,9 +9,7 @@ export type WalletSafeActions = {
 export const walletSafeActions = (
   safeAddress: EIP3770Address | Address,
 ): ((client: WalletClient<Transport, Chain, Account>) => WalletSafeActions) => {
-  return (client) => ({
-    generateSafeTransactionSignature: (args) => generateSafeTransactionSignature(client, safeAddress, args),
-  })
+  return (client) => ({ generateSafeTransactionSignature: (args) => generateSafeTransactionSignature(client, safeAddress, args) })
 }
 
 export { generateSafeTransactionSignature }
