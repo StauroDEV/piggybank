@@ -41,7 +41,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "lint": "eslint --ext .ts ."
+    "lint": "eslint --ext .ts .",
+    "prepublishOnly": "pnpm build"
   },
   "publishConfig": {
     "access": "public"
