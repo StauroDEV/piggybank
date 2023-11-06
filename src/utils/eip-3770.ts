@@ -1,11 +1,12 @@
 import { getAddress, isAddress } from 'viem/utils'
-import { Eip3770AddressInterface } from '../types.js'
+import type { EIP3770Address, Eip3770AddressInterface } from '../types.js'
+import type { Address } from 'viem'
 
 const networks = [
   { chainId: 1, shortName: 'eth' }, { chainId: 5, shortName: 'gor' }
 ]
 
-function parseEip3770Address(fullAddress: string): Eip3770AddressInterface {
+export function parseEip3770Address(fullAddress: EIP3770Address | Address): Eip3770AddressInterface {
   const parts = fullAddress.split(':')
   const address = getAddress(parts.length > 1 ? parts[1] : parts[0])
   const prefix = parts.length > 1 ? parts[0] : ''
@@ -42,7 +43,7 @@ export function getEip3770Address({
   fullAddress,
   chainId
 }: {
-  fullAddress: string
+  fullAddress: EIP3770Address | Address
   chainId: number
 }): Eip3770AddressInterface {
   const { address, prefix } = parseEip3770Address(fullAddress)
