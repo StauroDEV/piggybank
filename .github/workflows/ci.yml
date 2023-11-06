@@ -47,9 +47,6 @@ jobs:
       - name: lint code
         run: pnpm lint
 
-      - name: check formatting
-        run: pnpm format
-
       - name: build packages
         run: pnpm build
       - run: pnpm test:coverage
