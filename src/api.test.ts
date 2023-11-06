@@ -10,7 +10,7 @@ describe('ApiClient', () => {
     const api = new ApiClient({ url: 'http://localhost:8080', chainId: 1, safeAddress: EXAMPLE_SAFE })
 
     expect(api.safeAddress).toEqual(EXAMPLE_SAFE)
-    expect(   api.chainId).toEqual(1)
+    expect(api.chainId).toEqual(1)
   })
 })
 
