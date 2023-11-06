@@ -1,6 +1,6 @@
 {
   "name": "@stauro/piggybank",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "exports": {
     "./actions": {
@@ -37,12 +37,18 @@
     "typescript": "^5.2.2",
     "viem": "^1.18.1"
   },
-  "peerDependencies": { "viem": ">=1.16" },
-  "dependencies": { "semver": "^7.5.4" },
+  "peerDependencies": {
+    "viem": ">=1.16"
+  },
+  "dependencies": {
+    "semver": "^7.5.4"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint --ext .ts .",
     "prepublishOnly": "pnpm build"
   },
-  "publishConfig": { "access": "public" }
+  "publishConfig": {
+    "access": "public"
+  }
 }
