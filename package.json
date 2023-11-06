@@ -44,8 +44,8 @@
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint --ext .ts",
     "prepublishOnly": "pnpm build",
-    "test": "tsx src/**/*.ts",
-    "test:coverage": "c8 --all --include src tsx src/**/*.ts",
+    "test": "find src -name '*.test.ts' -exec node --import tsx --test {} \\;",
+    "test:coverage": "c8 --all --include src pnpm test",
     "test:report": "c8 report --reporter=text-lcov > ./coverage/lcov.info"
   },
   "publishConfig": { "access": "public" }
