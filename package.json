@@ -46,7 +46,7 @@
     "prepublishOnly": "pnpm build",
     "test": "tsx src/**/*.test.ts",
     "test:coverage": "c8 tsx --test src/**/*.test.ts",
-    "test:report": "c8 report --reporter=text-lcov > lcov.info"
+    "test:report": "c8 report --reporter=text-lcov > ./coverage/lcov.info"
   },
   "publishConfig": { "access": "public" }
 }

@@ -175,5 +175,3 @@ dist
 .DS_Store
 
 site/.vitepress/cache
-
-lcov.info
