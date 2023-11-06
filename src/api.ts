@@ -66,13 +66,34 @@ export async function sendRequest<T>({
   throw new Error(`${response.statusText}\n${JSON.stringify(jsonResponse, null, 2)}`)
 }
 
-type ProposeTransactionProps = {
+export type ProposeTransactionProps = {
   safeTransactionData: Omit<SafeTransactionData, 'value' |'data'> & Pick<SafeTransactionDataPartial, 'value' | 'data'>
   safeTxHash: Hash
   senderAddress: `${string}:${Address}` | Address
   senderSignature: Hex
   origin?: string
   chainId?: number
+}
+
+export type GetDelegateProps = Partial<{
+  delegateAddress: EIP3770Address | Address
+  delegatorAddress: EIP3770Address | Address
+  label: string
+  limit: string
+  offset: string
+  chainId: number
+}>
+
+export type SafeDelegateListResponse = {
+  readonly count: number
+  readonly next?: string
+  readonly previous?: string
+  readonly results: {
+    readonly safe: string
+    readonly delegate: string
+    readonly delegator: string
+    readonly label: string
+  }[]
 }
 
 export class ApiClient {
@@ -122,6 +143,45 @@ export class ApiClient {
       url: `${this.#url}/v1/safes/${safeAddress}/multisig-transactions/`,
       method: 'POST',
       body
+    })
+  }
+  async getDelegates(args?: GetDelegateProps): Promise<SafeDelegateListResponse> {
+
+    const { delegateAddress,
+      delegatorAddress,
+      label,
+      limit,
+      offset, chainId } = args ?? {}
+
+    const url = new URL(`${this.#url}/v1/delegates`)
+
+    const { address: safeAddress } = getEip3770Address({
+      fullAddress: this.safeAddress,
+      chainId: chainId ?? this.chainId
+    })
+
+    url.searchParams.set('safe', safeAddress)
+    
+    if (delegateAddress) {
+      const { address: delegate } = getEip3770Address({ fullAddress: delegateAddress, chainId: chainId ?? this.chainId })
+      url.searchParams.set('delegate', delegate)
+    }
+    if (delegatorAddress) {
+      const { address: delegator } = getEip3770Address({ fullAddress: delegatorAddress, chainId: chainId ?? this.chainId })
+      url.searchParams.set('delegator', delegator)
+    }
+    if (label) {
+      url.searchParams.set('label', label)
+    }
+    if (limit) {
+      url.searchParams.set('limit', limit)
+    }
+    if (offset) {
+      url.searchParams.set('offset', offset)
+    }
+    return sendRequest({
+      url: url.toString(),
+      method: 'GET'
     })
   }
 }

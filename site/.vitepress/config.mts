@@ -56,6 +56,10 @@ export default defineConfig({
             text: 'proposeTransaction',
             link: '/docs/api/proposeTransaction',
           },
+          {
+            text: 'getDelegates',
+            link: '/docs/api/getDelegates',
+          }
         ],
       },
       {
