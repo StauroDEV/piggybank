@@ -8,9 +8,6 @@ on:
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
-  VITE_ANVIL_FORK_URL: ${{ vars.VITE_ANVIL_FORK_URL }}
-  VITE_ANVIL_BLOCK_NUMBER: ${{ vars.VITE_ANVIL_BLOCK_NUMBER }}
-  VITE_ANVIL_SAFE_ADDRESS: ${{ vars.VITE_SAFE_ADDRESS }}
 
 jobs:
   build:
@@ -50,10 +47,19 @@ jobs:
       - name: lint code
         run: pnpm lint
 
+      - name: Install foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
       - name: build packages
         run: pnpm build
-      - run: pnpm test:coverage
-      - run: pnpm test:report
+      - name: run tests
+        run: pnpm test:coverage
+        env:
+          VITE_ANVIL_FORK_URL: ${{ vars.VITE_ANVIL_FORK_URL }}
+          VITE_ANVIL_BLOCK_NUMBER: ${{ vars.VITE_ANVIL_BLOCK_NUMBER }}
+          VITE_ANVIL_SAFE_ADDRESS: ${{ vars.VITE_SAFE_ADDRESS }}
 
         # run coverage only on ubuntu
       - name: Coveralls
