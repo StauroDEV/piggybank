@@ -1,5 +1,4 @@
-import { describe, it } from 'node:test'
-import { expect } from 'expect'
+import { describe, it, expect } from 'vitest'
 import { ApiClient } from './api.js'
 import { goerli } from 'viem/chains'
 

@@ -1,5 +1,4 @@
-import { describe, it } from 'node:test'
-import { expect } from 'expect'
+import { describe, it, expect } from 'vitest'
 import { parseEip3770Address, getEip3770Address } from './eip-3770.js'
  
 describe('parseEip3770Address', () => {
