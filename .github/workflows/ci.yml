@@ -8,6 +8,9 @@ on:
 
 env:
   PNPM_CACHE_FOLDER: .pnpm-store
+  VITE_ANVIL_FORK_URL: ${{ vars.VITE_ANVIL_FORK_URL }}
+  VITE_ANVIL_BLOCK_NUMBER: ${{ vars.VITE_ANVIL_BLOCK_NUMBER }}
+  VITE_ANVIL_SAFE_ADDRESS: ${{ vars.VITE_SAFE_ADDRESS }}
 
 jobs:
   build:
