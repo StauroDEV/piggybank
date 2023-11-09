@@ -45,7 +45,6 @@ export function getEip3770Address({
 }): Eip3770AddressInterface {
   const { address, prefix } = parseEip3770Address(fullAddress)
   validateEthereumAddress(address)
-  console.log({ prefixIn3770Util: prefix, chainId })
   if (prefix) {
     validateEip3770NetworkPrefix(prefix, chainId)
   }
