@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { ApiClient } from './api.js'
-import { goerli } from 'viem/chains'
+import { goerli, sepolia } from 'viem/chains'
+import { TEST_ADDRESS, EXAMPLE_SAFE_ADDRESS } from '../tests/constants.js'
 
 const EXAMPLE_SAFE = 'gor:0x04786B39Bd84b3a5344dC7355e4d8785b0981902'
 
@@ -15,8 +16,8 @@ describe('ApiClient', () => {
 
 describe('getDelegates', () => {
   it('should list all delegates', async () => {
-    const api = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', chainId: goerli.id, safeAddress: EXAMPLE_SAFE }) 
-    
+    const api = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', chainId: goerli.id, safeAddress: EXAMPLE_SAFE })
+
     const result = await api.getDelegates()
 
     expect(result).toEqual(
@@ -34,5 +35,15 @@ describe('getDelegates', () => {
         ]
       }
     )
+  })
+})
+
+describe('getSafesByOwner', () => {
+  it('should list all safes owned by an address', async () => {
+    const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })
+
+    const result = await api.getSafesByOwner(TEST_ADDRESS)
+
+    expect(result.safes).includes(EXAMPLE_SAFE_ADDRESS)
   })
 })

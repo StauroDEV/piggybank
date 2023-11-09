@@ -96,6 +96,10 @@ export type SafeDelegateListResponse = {
   }[]
 }
 
+export type SafesByOwnersResponse = {
+  readonly safes: Address[]
+}
+
 export class ApiClient {
   #url: URL | string
   safeAddress: EIP3770Address | Address
@@ -184,4 +188,15 @@ export class ApiClient {
       method: 'GET'
     })
   }
+  async getSafesByOwner(ownerAddress: EIP3770Address | Address): Promise<SafesByOwnersResponse> {
+    const { address: owner } = getEip3770Address({
+      fullAddress: ownerAddress,
+      chainId: this.chainId
+    })
+
+    return sendRequest({
+      url: `${this.#url}/v1/owners/${owner}/safes`,
+      method: 'GET'
+    })
+  } 
 }
