@@ -1,10 +1,7 @@
 import { getAddress, isAddress } from 'viem/utils'
 import type { EIP3770Address, Eip3770AddressInterface } from '../types.js'
 import type { Address } from 'viem'
-
-const networks = [
-  { chainId: 1, shortName: 'eth' }, { chainId: 5, shortName: 'gor' }
-]
+import { networkShortNames } from './networks.js'
 
 export function parseEip3770Address(fullAddress: EIP3770Address | Address): Eip3770AddressInterface {
   const parts = fullAddress.split(':')
@@ -21,11 +18,11 @@ function validateEthereumAddress(address: string): void {
 }
 
 function isValidEip3770NetworkPrefix(prefix: string): boolean {
-  return networks.some(({ shortName }) => shortName === prefix)
+  return networkShortNames.some(({ shortName }) => shortName === prefix)
 }
 
 function getEip3770NetworkPrefixFromChainId(chainId: number): string {
-  const network = networks.find((network) => chainId === network.chainId)
+  const network = networkShortNames.find((network) => chainId === network.chainId)
   if (!network) {
     throw new Error('No network prefix supported for the current chainId')
   }
@@ -48,6 +45,7 @@ export function getEip3770Address({
 }): Eip3770AddressInterface {
   const { address, prefix } = parseEip3770Address(fullAddress)
   validateEthereumAddress(address)
+  console.log({ prefixIn3770Util: prefix, chainId })
   if (prefix) {
     validateEip3770NetworkPrefix(prefix, chainId)
   }
