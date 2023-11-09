@@ -1,4 +1,6 @@
+import { Address } from "viem"
 import { NetworkType } from "../src/utils/networks.js"
+import { EIP3770Address } from "../src/types.js"
 
 // Test accounts
 export const ACCOUNTS = [
@@ -14,17 +16,18 @@ if (!process.env.VITE_TEST_NETWORK_TYPE) {
 
 export const TEST_NETWORK_TYPE = (process.env.VITE_TEST_NETWORK_TYPE ?? 'ETHEREUM_GOERLI') as NetworkType
 
-if (!process.env.VITE_SAFE_ADDRESS) {
-  throw new Error('Missing environment variable "VITE_SAFE_ADDRESS"')
+if (!process.env.VITE_EXAMPLE_SAFE) {
+  throw new Error('Missing environment variable "VITE_EXAMPLE_SAFE"')
 }
 
-export const SAFE_ADDRESS = process.env.VITE_SAFE_ADDRESS
+export const EXAMPLE_SAFE = process.env.VITE_EXAMPLE_SAFE as EIP3770Address
+export const [EXAMPLE_SAFE_PREFIX, EXAMPLE_SAFE_ADDRESS] = EXAMPLE_SAFE.split(':')
 
 if (!process.env.VITE_TEST_ADDRESS) {
   throw new Error('Missing environment variable "VITE_TEST_ADDRESS"')
 }
 
-export const TEST_ADDRESS = process.env.VITE_TEST_ADDRESS
+export const TEST_ADDRESS = process.env.VITE_TEST_ADDRESS as Address
 
 if (!process.env.VITE_ANVIL_FORK_URL) {
   throw new Error('Missing environment variable "VITE_ANVIL_FORK_URL"')
