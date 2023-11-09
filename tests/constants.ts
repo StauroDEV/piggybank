@@ -8,6 +8,24 @@ export const ACCOUNTS = [
 // Named accounts
 export const [ALICE, BOB] = ACCOUNTS
 
+if (!process.env.VITE_TEST_NETWORK_TYPE) {
+  throw new Error('Missing environment variable "VITE_TEST_NETWORK_TYPE"')
+}
+
+export const TEST_NETWORK_TYPE = (process.env.VITE_TEST_NETWORK_TYPE ?? 'ETHEREUM_GOERLI') as NetworkType
+
+if (!process.env.VITE_SAFE_ADDRESS) {
+  throw new Error('Missing environment variable "VITE_SAFE_ADDRESS"')
+}
+
+export const SAFE_ADDRESS = process.env.VITE_SAFE_ADDRESS
+
+if (!process.env.VITE_TEST_ADDRESS) {
+  throw new Error('Missing environment variable "VITE_TEST_ADDRESS"')
+}
+
+export const TEST_ADDRESS = process.env.VITE_TEST_ADDRESS
+
 if (!process.env.VITE_ANVIL_FORK_URL) {
   throw new Error('Missing environment variable "VITE_ANVIL_FORK_URL"')
 }
@@ -22,8 +40,4 @@ export const FORK_BLOCK_NUMBER = BigInt(
   Number(process.env.VITE_ANVIL_BLOCK_NUMBER),
 )
 
-if (!process.env.VITE_TEST_NETWORK_TYPE) {
-  throw new Error('Missing environment variable "VITE_TEST_NETWORK_TYPE"')
-}
 
-export const TEST_NETWORK_TYPE = (process.env.VITE_TEST_NETWORK_TYPE ?? 'ETHEREUM_GOERLI') as NetworkType
