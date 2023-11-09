@@ -15,7 +15,7 @@ export const simulateTxAccessorAbi = [
 ] as const
 
 export const safeAbi = parseAbi([
-  'function simulateAndRevert(address targetContract, bytes memory calldataPayload)', 'function getTransactionHash(address to, uint256 value, bytes calldata data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) public view returns (bytes32)', 'function execTransaction(address to, uint256 value, bytes calldata data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes memory signatures) public payable returns (bool)', 'function nonce() public view returns (uint256)', 'function getThreshold() public view returns (uint256)'
+  'function simulateAndRevert(address targetContract, bytes memory calldataPayload)', 'function getTransactionHash(address to, uint256 value, bytes calldata data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) public view returns (bytes32)', 'function execTransaction(address to, uint256 value, bytes calldata data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes memory signatures) public payable returns (bool)', 'function nonce() public view returns (uint256)', 'function getThreshold() public view returns (uint256)', 'function getOwners() public view returns (address[])'
 ])
 
 export const simulateTxAccessorAddress = '0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da'
