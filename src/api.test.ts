@@ -31,6 +31,16 @@ describe('ApiClient', () => {
     })
   })
 
+  describe('getMultisigTransactions', () => {
+    it('should return a list of transactions for a given safe address', async () => {
+      const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })
+
+      const result = await api.getMultisigTransactions(EXAMPLE_SAFE)
+
+      expect(result.results[0]).toEqual(MULTISIG_TRANSACTION_TEST_RESPONSE)
+    })
+  })
+
   describe('getPendingTransactions', () => {
     it('should return a list of pending transactions', async () => {
       const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })

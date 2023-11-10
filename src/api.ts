@@ -173,6 +173,19 @@ export class ApiClient {
       method: 'GET'
     })
   }
+  async getMultisigTransactions(safeAddress: EIP3770Address | Address): Promise<SafeMultisigTransactionListResponse> {
+    if (!safeAddress) throw new Error('Invalid Safe address')
+
+    const { address } = getEip3770Address({
+      fullAddress: safeAddress,
+      chainId: this.chainId
+    })
+
+    return sendRequest({
+      url: `${this.#url}/v1/safes/${address}/multisig-transactions/`,
+      method: 'GET'
+    })
+  }
   async getPendingTransactions({
     safeAddress,
     currentNonce
