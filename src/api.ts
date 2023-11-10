@@ -1,5 +1,5 @@
 import type { Address, Hex, Hash } from 'viem'
-import type { EIP3770Address, SafeMultisigTransactionResponse, SafeTransactionData, SafeTransactionDataPartial } from './types.js'
+import type { EIP3770Address, SafeInfoResponse, SafeMultisigTransactionListResponse, SafeMultisigTransactionResponse, SafeTransactionData, SafeTransactionDataPartial } from './types.js'
 import { getEip3770Address } from './utils/eip-3770.js'
 
 Object.defineProperty(BigInt.prototype, 'toJSON', {
@@ -75,6 +75,11 @@ export type ProposeTransactionProps = {
   chainId?: number
 }
 
+export type GetPendingTransactionsProps = {
+  safeAddress: EIP3770Address | Address,
+  currentNonce?: number
+}
+
 export type GetDelegateProps = Partial<{
   delegateAddress: EIP3770Address | Address
   delegatorAddress: EIP3770Address | Address
@@ -108,6 +113,19 @@ export class ApiClient {
     this.#url = new URL('/api', url)
     this.safeAddress = safeAddress
     this.chainId = chainId
+  }
+  async getSafeInfo(safeAddress: EIP3770Address | Address): Promise<SafeInfoResponse> {
+    if (!safeAddress) throw new Error('Invalid Safe address')
+
+    const { address } = getEip3770Address({
+      fullAddress: safeAddress,
+      chainId: this.chainId
+    })
+
+    return sendRequest({
+      url: `${this.#url}/v1/safes/${address}/`,
+      method: 'GET'
+    })
   }
   async proposeTransaction({
     safeTransactionData,
@@ -152,6 +170,29 @@ export class ApiClient {
   async getTransaction(safeTxHash: string): Promise<SafeMultisigTransactionResponse> {
     return sendRequest({
       url: `${this.#url}/v1/multisig-transactions/${safeTxHash}/`,
+      method: 'GET'
+    })
+  }
+  async getPendingTransactions({
+    safeAddress,
+    currentNonce
+  }: GetPendingTransactionsProps): Promise<SafeMultisigTransactionListResponse[]> {
+    if (!safeAddress) throw new Error('Invalid Safe address')
+
+    const { address } = getEip3770Address({
+      fullAddress: safeAddress,
+      chainId: this.chainId
+    })
+
+    const nonce = currentNonce ?? (await this.getSafeInfo(address)).nonce
+
+    const url = new URL(`${this.#url}/v1/safes/${address}/multisig-transactions/`)
+
+    url.searchParams.set('executed', 'false')
+    url.searchParams.set('nonce__gte', nonce.toString())
+
+    return sendRequest({
+      url: url.toString(),
       method: 'GET'
     })
   }

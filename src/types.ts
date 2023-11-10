@@ -31,6 +31,18 @@ export type SafeTransactionData = {
   refundReceiver?: Address
 }
 
+export type SafeInfoResponse = {
+  readonly address: string
+  readonly nonce: number
+  readonly threshold: number
+  readonly owners: string[]
+  readonly masterCopy: string
+  readonly modules: string[]
+  readonly fallbackHandler: string
+  readonly guard: string
+  readonly version: string
+}
+
 export type SafeMultisigConfirmationResponse = {
   readonly owner: string
   readonly submissionDate: string
@@ -80,4 +92,12 @@ export type SafeMultisigTransactionResponse = {
   readonly confirmations?: SafeMultisigConfirmationResponse[]
   readonly trusted: boolean
   readonly signatures?: string
+}
+
+export type SafeMultisigTransactionListResponse = {
+  readonly count: number
+  readonly next?: string
+  readonly previous?: string
+  readonly results: SafeMultisigTransactionResponse[]
+  readonly countUniqueNonce: number // ! api-kit safeTransactionServiceTypes file does not include this, but api returns it
 }

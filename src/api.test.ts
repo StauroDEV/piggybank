@@ -1,9 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { ApiClient } from './api.js'
 import { goerli, sepolia } from 'viem/chains'
-import { TEST_ADDRESS, EXAMPLE_SAFE_ADDRESS, MULTISIG_TRANSACTION_TEST_RESPONSE } from '../tests/constants.js'
-
-const EXAMPLE_SAFE = 'gor:0x04786B39Bd84b3a5344dC7355e4d8785b0981902'
+import { TEST_ADDRESS, EXAMPLE_SAFE_ADDRESS, EXAMPLE_SAFE, MULTISIG_TRANSACTION_TEST_RESPONSE, EXAMPLE_SAFE_INFO_RESPONSE } from '../tests/constants.js'
 
 describe('ApiClient', () => {
   it('initializes properly', () => {
@@ -11,6 +9,16 @@ describe('ApiClient', () => {
 
     expect(api.safeAddress).toEqual(EXAMPLE_SAFE)
     expect(api.chainId).toEqual(1)
+  })
+
+  describe('getSafeInfo', () => {
+    it('should return the safe info', async () => {
+      const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })
+
+      const result = await api.getSafeInfo(EXAMPLE_SAFE)
+
+      expect(result).toEqual(EXAMPLE_SAFE_INFO_RESPONSE)
+    })
   })
 
   describe('getTransaction', () => {
@@ -23,8 +31,27 @@ describe('ApiClient', () => {
     })
   })
 
+  describe('getPendingTransactions', () => {
+    it('should return a list of pending transactions', async () => {
+      const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })
+
+      const result = await api.getPendingTransactions({ safeAddress: EXAMPLE_SAFE })
+
+      expect(result).toEqual(
+        {
+          count: 0,
+          next: null,
+          previous: null,
+          results: [],
+          countUniqueNonce: 1
+        })
+    })
+  })
+
   describe('getDelegates', () => {
     it('should list all delegates', async () => {
+      const EXAMPLE_SAFE = 'gor:0x04786B39Bd84b3a5344dC7355e4d8785b0981902'
+
       const api = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', chainId: goerli.id, safeAddress: EXAMPLE_SAFE })
 
       const result = await api.getDelegates()
