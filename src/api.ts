@@ -1,5 +1,5 @@
 import type { Address, Hex, Hash } from 'viem'
-import type { EIP3770Address, SafeTransactionData, SafeTransactionDataPartial } from './types.js'
+import type { EIP3770Address, SafeMultisigTransactionResponse, SafeTransactionData, SafeTransactionDataPartial } from './types.js'
 import { getEip3770Address } from './utils/eip-3770.js'
 
 Object.defineProperty(BigInt.prototype, 'toJSON', {
@@ -67,7 +67,7 @@ export async function sendRequest<T>({
 }
 
 export type ProposeTransactionProps = {
-  safeTransactionData: Omit<SafeTransactionData, 'value' |'data'> & Pick<SafeTransactionDataPartial, 'value' | 'data'>
+  safeTransactionData: Omit<SafeTransactionData, 'value' | 'data'> & Pick<SafeTransactionDataPartial, 'value' | 'data'>
   safeTxHash: Hash
   senderAddress: `${string}:${Address}` | Address
   senderSignature: Hex
@@ -141,12 +141,18 @@ export class ApiClient {
       to,
       value: safeTransactionData.value ?? 0n
     }
-  
+
 
     return sendRequest({
       url: `${this.#url}/v1/safes/${safeAddress}/multisig-transactions/`,
       method: 'POST',
       body
+    })
+  }
+  async getTransaction(safeTxHash: string): Promise<SafeMultisigTransactionResponse> {
+    return sendRequest({
+      url: `${this.#url}/v1/multisig-transactions/${safeTxHash}/`,
+      method: 'GET'
     })
   }
   async getDelegates(args?: GetDelegateProps): Promise<SafeDelegateListResponse> {
@@ -165,7 +171,7 @@ export class ApiClient {
     })
 
     url.searchParams.set('safe', safeAddress)
-    
+
     if (delegateAddress) {
       const { address: delegate } = getEip3770Address({ fullAddress: delegateAddress, chainId: chainId ?? this.chainId })
       url.searchParams.set('delegate', delegate)
@@ -198,5 +204,5 @@ export class ApiClient {
       url: `${this.#url}/v1/owners/${owner}/safes`,
       method: 'GET'
     })
-  } 
+  }
 }
