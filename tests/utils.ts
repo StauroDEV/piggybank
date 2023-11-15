@@ -5,7 +5,8 @@ import {
   createWalletClient,
   http, HttpTransport,
   PublicClient,
-  WalletClient
+  WalletClient,
+  defineChain
 } from 'viem'
 import { networks } from '../src/utils/networks.js'
 import { TEST_NETWORK_TYPE } from './constants.js'
@@ -16,7 +17,7 @@ import { TEST_NETWORK_TYPE } from './constants.js'
    * This is used by the anvil proxy to route requests to the correct anvil instance.
    */
 export const pool = Number(process.env.VITEST_POOL_ID ?? 1)
-export const anvil = {
+export const anvil = defineChain({
   // Get chain details based on the network used for tests (ie. that setup in ./globalSetup.ts)
   ...networks[TEST_NETWORK_TYPE],
   rpcUrls: {
@@ -32,7 +33,7 @@ export const anvil = {
       webSocket: [`ws://127.0.0.1:8545/${pool}`]
     }
   }
-} as const satisfies Chain
+}) as Chain
 
 export const testClient = createTestClient({
   chain: anvil,
