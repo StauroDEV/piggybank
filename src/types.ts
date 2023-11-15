@@ -101,3 +101,7 @@ export type SafeMultisigTransactionListResponse = {
   readonly results: SafeMultisigTransactionResponse[]
   readonly countUniqueNonce: number // ! api-kit safeTransactionServiceTypes file does not include this, but api returns it
 }
+
+export type SignatureResponse = {
+  readonly signature: string
+}

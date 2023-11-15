@@ -1,5 +1,5 @@
 import type { Address, Hex, Hash } from 'viem'
-import type { EIP3770Address, SafeInfoResponse, SafeMultisigTransactionListResponse, SafeMultisigTransactionResponse, SafeTransactionData, SafeTransactionDataPartial } from './types.js'
+import type { EIP3770Address, SafeInfoResponse, SafeMultisigTransactionListResponse, SafeMultisigTransactionResponse, SafeTransactionData, SafeTransactionDataPartial, SignatureResponse } from './types.js'
 import { getEip3770Address } from './utils/eip-3770.js'
 
 Object.defineProperty(BigInt.prototype, 'toJSON', {
@@ -165,6 +165,17 @@ export class ApiClient {
       url: `${this.#url}/v1/safes/${safeAddress}/multisig-transactions/`,
       method: 'POST',
       body
+    })
+  }
+  async confirmTransaction(safeTxHash: string, signature: Hex): Promise<SignatureResponse> {
+    if (!safeTxHash) throw new Error('Invalid safeTxHash')
+
+    if (!signature) throw new Error('Invalid signature')
+
+    return sendRequest({
+      url: `${this.#url}/v1/multisig-transactions/${safeTxHash}/confirmations/`,
+      method: 'POST',
+      body: { signature }
     })
   }
   async getTransaction(safeTxHash: string): Promise<SafeMultisigTransactionResponse> {
