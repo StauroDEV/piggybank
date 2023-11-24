@@ -1,5 +1,5 @@
 import type { Address, Hex, Hash } from 'viem'
-import type { EIP3770Address, SafeTransactionData, SafeTransactionDataPartial } from './types.js'
+import type { EIP3770Address, SafeInfoResponse, SafeMultisigTransactionListResponse, SafeMultisigTransactionResponse, SafeTransactionData, SafeTransactionDataPartial, SignatureResponse } from './types.js'
 import { getEip3770Address } from './utils/eip-3770.js'
 
 Object.defineProperty(BigInt.prototype, 'toJSON', {
@@ -67,12 +67,17 @@ export async function sendRequest<T>({
 }
 
 export type ProposeTransactionProps = {
-  safeTransactionData: Omit<SafeTransactionData, 'value' |'data'> & Pick<SafeTransactionDataPartial, 'value' | 'data'>
+  safeTransactionData: Omit<SafeTransactionData, 'value' | 'data'> & Pick<SafeTransactionDataPartial, 'value' | 'data'>
   safeTxHash: Hash
   senderAddress: `${string}:${Address}` | Address
   senderSignature: Hex
   origin?: string
   chainId?: number
+}
+
+export type GetPendingTransactionsProps = {
+  safeAddress: EIP3770Address | Address,
+  currentNonce?: number
 }
 
 export type GetDelegateProps = Partial<{
@@ -96,6 +101,10 @@ export type SafeDelegateListResponse = {
   }[]
 }
 
+export type SafesByOwnersResponse = {
+  readonly safes: Address[]
+}
+
 export class ApiClient {
   #url: URL | string
   safeAddress: EIP3770Address | Address
@@ -104,6 +113,19 @@ export class ApiClient {
     this.#url = new URL('/api', url)
     this.safeAddress = safeAddress
     this.chainId = chainId
+  }
+  async getSafeInfo(safeAddress: EIP3770Address | Address): Promise<SafeInfoResponse> {
+    if (!safeAddress) throw new Error('Invalid Safe address')
+
+    const { address } = getEip3770Address({
+      fullAddress: safeAddress,
+      chainId: this.chainId
+    })
+
+    return sendRequest({
+      url: `${this.#url}/v1/safes/${address}/`,
+      method: 'GET'
+    })
   }
   async proposeTransaction({
     safeTransactionData,
@@ -137,12 +159,65 @@ export class ApiClient {
       to,
       value: safeTransactionData.value ?? 0n
     }
-  
+
 
     return sendRequest({
       url: `${this.#url}/v1/safes/${safeAddress}/multisig-transactions/`,
       method: 'POST',
       body
+    })
+  }
+  async confirmTransaction(safeTxHash: string, signature: Hex): Promise<SignatureResponse> {
+    if (!safeTxHash) throw new Error('Invalid safeTxHash')
+
+    if (!signature) throw new Error('Invalid signature')
+
+    return sendRequest({
+      url: `${this.#url}/v1/multisig-transactions/${safeTxHash}/confirmations/`,
+      method: 'POST',
+      body: { signature }
+    })
+  }
+  async getTransaction(safeTxHash: string): Promise<SafeMultisigTransactionResponse> {
+    return sendRequest({
+      url: `${this.#url}/v1/multisig-transactions/${safeTxHash}/`,
+      method: 'GET'
+    })
+  }
+  async getMultisigTransactions(safeAddress: EIP3770Address | Address): Promise<SafeMultisigTransactionListResponse> {
+    if (!safeAddress) throw new Error('Invalid Safe address')
+
+    const { address } = getEip3770Address({
+      fullAddress: safeAddress,
+      chainId: this.chainId
+    })
+
+    return sendRequest({
+      url: `${this.#url}/v1/safes/${address}/multisig-transactions/`,
+      method: 'GET'
+    })
+  }
+  async getPendingTransactions({
+    safeAddress,
+    currentNonce
+  }: GetPendingTransactionsProps): Promise<SafeMultisigTransactionListResponse[]> {
+    if (!safeAddress) throw new Error('Invalid Safe address')
+
+    const { address } = getEip3770Address({
+      fullAddress: safeAddress,
+      chainId: this.chainId
+    })
+
+    const nonce = currentNonce ?? (await this.getSafeInfo(address)).nonce
+
+    const url = new URL(`${this.#url}/v1/safes/${address}/multisig-transactions/`)
+
+    url.searchParams.set('executed', 'false')
+    url.searchParams.set('nonce__gte', nonce.toString())
+
+    return sendRequest({
+      url: url.toString(),
+      method: 'GET'
     })
   }
   async getDelegates(args?: GetDelegateProps): Promise<SafeDelegateListResponse> {
@@ -161,7 +236,7 @@ export class ApiClient {
     })
 
     url.searchParams.set('safe', safeAddress)
-    
+
     if (delegateAddress) {
       const { address: delegate } = getEip3770Address({ fullAddress: delegateAddress, chainId: chainId ?? this.chainId })
       url.searchParams.set('delegate', delegate)
@@ -181,6 +256,17 @@ export class ApiClient {
     }
     return sendRequest({
       url: url.toString(),
+      method: 'GET'
+    })
+  }
+  async getSafesByOwner(ownerAddress: EIP3770Address | Address): Promise<SafesByOwnersResponse> {
+    const { address: owner } = getEip3770Address({
+      fullAddress: ownerAddress,
+      chainId: this.chainId
+    })
+
+    return sendRequest({
+      url: `${this.#url}/v1/owners/${owner}/safes`,
       method: 'GET'
     })
   }
