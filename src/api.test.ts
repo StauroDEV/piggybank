@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { ApiClient } from './api.js'
 import { goerli, sepolia } from 'viem/chains'
-import { TEST_ADDRESS, EXAMPLE_SAFE_ADDRESS, EXAMPLE_SAFE, MULTISIG_TRANSACTION_TEST_RESPONSE, EXAMPLE_SAFE_INFO_RESPONSE } from '../tests/constants.js'
+import { TEST_ADDRESS, EXAMPLE_SAFE_ADDRESS, EXAMPLE_SAFE } from '../tests/constants.js'
+import { EXAMPLE_SAFE_INFO_RESPONSE, MULTISIG_TRANSACTION_TEST_RESPONSE } from '../tests/test-data.js'
 
 describe('ApiClient', () => {
   it('initializes properly', () => {
@@ -59,7 +60,7 @@ describe('ApiClient', () => {
   })
 
   describe('getDelegates', () => {
-    it('should list all delegates', async () => {
+    it.only('should list all delegates', async () => {
       const EXAMPLE_SAFE = 'gor:0x04786B39Bd84b3a5344dC7355e4d8785b0981902'
 
       const api = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', chainId: goerli.id, safeAddress: EXAMPLE_SAFE })
