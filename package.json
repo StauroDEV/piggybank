@@ -24,21 +24,26 @@
     "dist"
   ],
   "devDependencies": {
-    "@stylistic/eslint-plugin": "^0.1.2",
-    "@types/semver": "^7.5.3",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
-    "@viem/anvil": "^0.0.6",
-    "@vitest/coverage-v8": "^0.34.6",
-    "eslint": "^8.52.0",
-    "prettier": "^3.0.3",
-    "tsx": "^3.14.0",
-    "typescript": "^5.2.2",
-    "viem": "^1.18.1",
-    "vitest": "^0.34.6"
+    "@stylistic/eslint-plugin": "^1.6.0",
+    "@types/node": "^20.11.16",
+    "@types/semver": "^7.5.6",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@viem/anvil": "^0.0.7",
+    "@vitest/coverage-v8": "^1.2.2",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3",
+    "viem": "^2.7.6",
+    "vitest": "^1.2.2"
   },
-  "peerDependencies": { "viem": ">=1.16" },
-  "dependencies": { "semver": "^7.5.4" },
+  "peerDependencies": {
+    "viem": ">=1.16"
+  },
+  "dependencies": {
+    "semver": "^7.6.0"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "lint": "eslint --ext .ts",
@@ -46,5 +51,7 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
-  "publishConfig": { "access": "public" }
+  "publishConfig": {
+    "access": "public"
+  }
 }
