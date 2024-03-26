@@ -32,23 +32,23 @@ export type SafeTransactionData = {
 }
 
 export type SafeInfoResponse = {
-  readonly address: string
-  readonly nonce: number
-  readonly threshold: number
-  readonly owners: string[]
-  readonly masterCopy: string
-  readonly modules: string[]
-  readonly fallbackHandler: string
-  readonly guard: string
+  readonly address: Address
+  readonly nonce: string
+  readonly threshold: string
+  readonly owners: Address[]
+  readonly masterCopy: Address
+  readonly modules: Address[]
+  readonly fallbackHandler: Address
+  readonly guard: Address
   readonly version: string
 }
 
 export type SafeMultisigConfirmationResponse = {
-  readonly owner: string
+  readonly owner: Address
   readonly submissionDate: string
-  readonly transactionHash?: string
+  readonly transactionHash?: Hex
   readonly confirmationType?: string
-  readonly signature: string
+  readonly signature: Hex
   readonly signatureType?: string
 }
 
@@ -60,25 +60,25 @@ export type SafeMultisigConfirmationListResponse = {
 }
 
 export type SafeMultisigTransactionResponse = {
-  readonly safe: string
-  readonly to: string
+  readonly safe: Address
+  readonly to: Address
   readonly value: string
-  readonly data?: string
+  readonly data?: Hex
   readonly operation: number
   readonly gasToken: string
   readonly safeTxGas: number
   readonly baseGas: number
   readonly gasPrice: string
-  readonly refundReceiver?: string
+  readonly refundReceiver?: Address
   readonly nonce: number
   readonly executionDate: string
   readonly submissionDate: string
   readonly modified: string
   readonly blockNumber?: number
-  readonly transactionHash: string
-  readonly safeTxHash: string
-  readonly proposer: string // ! safe-core-sdk-types file does not include this, but api returns it
-  readonly executor?: string
+  readonly transactionHash: Hex
+  readonly safeTxHash: Hex
+  readonly proposer: Address // ! safe-core-sdk-types file does not include this, but api returns it
+  readonly executor?: Address
   readonly isExecuted: boolean
   readonly isSuccessful?: boolean
   readonly ethGasPrice?: string
@@ -91,7 +91,7 @@ export type SafeMultisigTransactionResponse = {
   readonly confirmationsRequired: number
   readonly confirmations?: SafeMultisigConfirmationResponse[]
   readonly trusted: boolean
-  readonly signatures?: string
+  readonly signatures?: Hex
 }
 
 export type SafeMultisigTransactionListResponse = {
@@ -103,5 +103,5 @@ export type SafeMultisigTransactionListResponse = {
 }
 
 export type SignatureResponse = {
-  readonly signature: string
+  readonly signature: Hex
 }
