@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { ApiClient } from './api.js'
-import { goerli, sepolia } from 'viem/chains'
+import { sepolia, goerli } from 'viem/chains'
 import { TEST_ADDRESS, EXAMPLE_SAFE_ADDRESS, EXAMPLE_SAFE } from '../tests/constants.js'
-import { EXAMPLE_SAFE_INFO_RESPONSE, MULTISIG_TRANSACTION_TEST_RESPONSE } from '../tests/test-data.js'
+import { EXAMPLE_SAFE_INFO_RESPONSE, MULTISIG_TRANSACTION_TEST_RESPONSE_0, MULTISIG_TRANSACTION_TEST_RESPONSE_1, NONCE_0, TEST_TRANSACTION_HASH_0 } from '../tests/test-data.js'
 
 describe('ApiClient', () => {
   it('initializes properly', () => {
@@ -15,7 +15,6 @@ describe('ApiClient', () => {
   describe('getSafeInfo', () => {
     it('should return the safe info', async () => {
       const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })
-
       const result = await api.getSafeInfo(EXAMPLE_SAFE)
 
       expect(result).toEqual(EXAMPLE_SAFE_INFO_RESPONSE)
@@ -25,20 +24,19 @@ describe('ApiClient', () => {
   describe('getTransaction', () => {
     it('should return a transaction for a given tx hash', async () => {
       const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })
+      const result = await api.getTransaction(TEST_TRANSACTION_HASH_0)
 
-      const result = await api.getTransaction('0x8759267d96af12fbee209a50a5a12a993fdbd81cd8692893a24de5e82fdb52a7')
-
-      expect(result).toEqual(MULTISIG_TRANSACTION_TEST_RESPONSE)
+      expect(result).toEqual(MULTISIG_TRANSACTION_TEST_RESPONSE_0)
     })
   })
 
   describe('getMultisigTransactions', () => {
     it('should return a list of transactions for a given safe address', async () => {
       const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })
-
       const result = await api.getMultisigTransactions(EXAMPLE_SAFE)
 
-      expect(result.results[0]).toEqual(MULTISIG_TRANSACTION_TEST_RESPONSE)
+      const firstTx = result?.results.find((tx) => tx.nonce == NONCE_0)
+      expect(firstTx).toEqual(MULTISIG_TRANSACTION_TEST_RESPONSE_0)
     })
   })
 
@@ -50,20 +48,19 @@ describe('ApiClient', () => {
 
       expect(result).toEqual(
         {
-          count: 0,
+          count: 1,
           next: null,
           previous: null,
-          results: [],
-          countUniqueNonce: 1
+          results: [MULTISIG_TRANSACTION_TEST_RESPONSE_1],
+          countUniqueNonce: 2
         })
     })
   })
 
-  describe('getDelegates', () => {
-    it.only('should list all delegates', async () => {
-      const EXAMPLE_SAFE = 'gor:0x04786B39Bd84b3a5344dC7355e4d8785b0981902'
-
-      const api = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', chainId: goerli.id, safeAddress: EXAMPLE_SAFE })
+  // TODO convert to sepolia safe 
+  describe.skip('getDelegates', () => {
+    it('should list all delegates', async () => {
+      const api = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', chainId: goerli.id, safeAddress: 'gor:0x04786B39Bd84b3a5344dC7355e4d8785b0981902' })
 
       const result = await api.getDelegates()
 
