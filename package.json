@@ -44,7 +44,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "lint": "eslint .",
+    "lint": "eslint src/**/*.ts eslint.config.js",
+    "lint:types": "tsc --noEmit",
     "prepublishOnly": "pnpm build",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"

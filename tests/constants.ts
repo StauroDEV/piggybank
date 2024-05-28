@@ -1,5 +1,4 @@
 import { Address } from 'viem'
-import { NetworkType } from '../src/utils/networks.js'
 import { EIP3770Address } from '../src/types.js'
 
 // ========================================
@@ -16,8 +15,6 @@ export const [ALICE, BOB] = ACCOUNTS
 // ========================================
 // TEST ENV VARIABLES
 // ========================================
-
-export const TEST_NETWORK_TYPE = (process.env.VITE_TEST_NETWORK_TYPE ?? 'ETHEREUM_SEPOLIA') as NetworkType
 
 if (!process.env.VITE_EXAMPLE_SAFE) {
   throw new Error('Missing environment variable "VITE_EXAMPLE_SAFE"')

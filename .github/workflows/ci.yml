@@ -46,6 +46,7 @@ jobs:
 
       - name: lint code
         run: pnpm lint
+        run: pnpm lint:types
 
       - name: Install foundry
         uses: foundry-rs/foundry-toolchain@v1
