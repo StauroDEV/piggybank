@@ -16,11 +16,11 @@ export const [ALICE, BOB] = ACCOUNTS
 // TEST ENV VARIABLES
 // ========================================
 
-if (!process.env.VITE_EXAMPLE_SAFE) {
-  throw new Error('Missing environment variable "VITE_EXAMPLE_SAFE"')
+if (!process.env.VITE_ANVIL_SAFE_ADDRESS) {
+  throw new Error('Missing environment variable "VITE_ANVIL_SAFE_ADDRESS"')
 }
 
-export const EXAMPLE_SAFE = process.env.VITE_EXAMPLE_SAFE as EIP3770Address
+export const EXAMPLE_SAFE = process.env.VITE_ANVIL_SAFE_ADDRESS as EIP3770Address
 export const [EXAMPLE_SAFE_PREFIX, EXAMPLE_SAFE_ADDRESS] = EXAMPLE_SAFE.split(':')
 
 if (!process.env.VITE_TEST_ADDRESS) {
