@@ -6,12 +6,14 @@ import { SafeInfoResponse, SafeMultisigTransactionResponse } from '../src/types.
 
 // Example safe:
 export const EXAMPLE_SAFE_INFO_RESPONSE: SafeInfoResponse = {
-  address: '0xbcA814Ee6E571d0BbC335b4e3869F89E532Ba8B8',
-  nonce: 1,
+  address: '0x4bCdCa2D6fa461Af5c326a3124C1F8b6e3D11538',
+  nonce: 2,
   threshold: 1,
-  owners: ['0xD7a0ca30F71cFDF45534B058c567a5FaE6C33846'],
+  owners: ['0xD3B282e9880cDcB1142830731cD83f7ac0e1043f'],
   masterCopy: '0xfb1bffC9d739B8D520DaF37dF666da4C687191EA',
-  modules: [],
+  modules: [
+    '0x3173A999d69224AD4066107c859196440fC358f2',
+  ],
   fallbackHandler: '0x017062a1dE2FE6b99BE3d9d37841FeD19F573804',
   guard: '0x0000000000000000000000000000000000000000',
   version: '1.3.0+L2',
@@ -24,6 +26,7 @@ export const NONCE_1 = 1
 export const TEST_TRANSACTION_HASH_0 = '0xff325d5c14219e7fcf23ccec94d504384404adbfcfef0c846600876a6ef2d832'
 
 export const MULTISIG_TRANSACTION_TEST_RESPONSE_0: SafeMultisigTransactionResponse = {
+
   safe: '0xbcA814Ee6E571d0BbC335b4e3869F89E532Ba8B8',
   to: '0xD7a0ca30F71cFDF45534B058c567a5FaE6C33846',
   value: '10000000000000000',

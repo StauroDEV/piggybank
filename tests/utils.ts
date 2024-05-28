@@ -8,8 +8,7 @@ import {
   WalletClient,
   defineChain,
 } from 'viem'
-import { networks } from '../src/utils/networks.js'
-import { TEST_NETWORK_TYPE } from './constants.js'
+import { sepolia } from 'viem/chains'
 
 /**
    * The id of the current test worker.
@@ -19,7 +18,7 @@ import { TEST_NETWORK_TYPE } from './constants.js'
 export const pool = Number(process.env.VITEST_POOL_ID ?? 1)
 export const anvil = defineChain({
   // Get chain details based on the network used for tests (ie. that setup in ./globalSetup.ts)
-  ...networks[TEST_NETWORK_TYPE],
+  ...sepolia,
   rpcUrls: {
     // These rpc urls are automatically used in the transports.
     default: {

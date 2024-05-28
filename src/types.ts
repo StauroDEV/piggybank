@@ -33,8 +33,8 @@ export type SafeTransactionData = {
 
 export type SafeInfoResponse = {
   readonly address: Address
-  readonly nonce: string
-  readonly threshold: string
+  readonly nonce: number
+  readonly threshold: number
   readonly owners: Address[]
   readonly masterCopy: Address
   readonly modules: Address[]
@@ -46,7 +46,7 @@ export type SafeInfoResponse = {
 export type SafeMultisigConfirmationResponse = {
   readonly owner: Address
   readonly submissionDate: string
-  readonly transactionHash?: Hex
+  readonly transactionHash: Hex | null
   readonly confirmationType?: string
   readonly signature: Hex
   readonly signatureType?: string
@@ -63,7 +63,7 @@ export type SafeMultisigTransactionResponse = {
   readonly safe: Address
   readonly to: Address
   readonly value: string
-  readonly data?: Hex
+  readonly data: Hex | null
   readonly operation: number
   readonly gasToken: string
   readonly safeTxGas: number
@@ -71,27 +71,27 @@ export type SafeMultisigTransactionResponse = {
   readonly gasPrice: string
   readonly refundReceiver?: Address
   readonly nonce: number
-  readonly executionDate: string
+  readonly executionDate: string | null
   readonly submissionDate: string
   readonly modified: string
-  readonly blockNumber?: number
-  readonly transactionHash: Hex
+  readonly blockNumber: number | null
+  readonly transactionHash: Hex | null
   readonly safeTxHash: Hex
   readonly proposer: Address // ! safe-core-sdk-types file does not include this, but api returns it
-  readonly executor?: Address
+  readonly executor: Address | null
   readonly isExecuted: boolean
-  readonly isSuccessful?: boolean
-  readonly ethGasPrice?: string
-  readonly maxFeePerGas: string // ! safe-core-sdk-types file does not include this, but api returns it
-  readonly maxPriorityFeePerGas: string // ! safe-core-sdk-types file does not include this, but api returns it
-  readonly gasUsed?: number
-  readonly fee?: string
+  readonly isSuccessful: boolean | null
+  readonly ethGasPrice: string | null
+  readonly maxFeePerGas: string | null // ! safe-core-sdk-types file does not include this, but api returns it
+  readonly maxPriorityFeePerGas: string | null // ! safe-core-sdk-types file does not include this, but api returns it
+  readonly gasUsed: number | null
+  readonly fee: string | null
   readonly origin: string
-  readonly dataDecoded?: string
+  readonly dataDecoded: string | null
   readonly confirmationsRequired: number
   readonly confirmations?: SafeMultisigConfirmationResponse[]
   readonly trusted: boolean
-  readonly signatures?: Hex
+  readonly signatures: Hex | null
 }
 
 export type SafeMultisigTransactionListResponse = {

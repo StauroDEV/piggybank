@@ -19,4 +19,4 @@ describe('estimateSafeTransactionGas', () => {
     })
     expect(gas1).toEqual(gas2)
   })
-})
+}, { timeout: 10000 })

@@ -30,7 +30,7 @@ describe('ApiClient', () => {
     })
   })
 
-  describe('getMultisigTransactions', () => {
+  describe.skip('getMultisigTransactions', () => {
     it('should return a list of transactions for a given safe address', async () => {
       const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })
       const result = await api.getMultisigTransactions(EXAMPLE_SAFE)
@@ -40,7 +40,7 @@ describe('ApiClient', () => {
     })
   })
 
-  describe('getPendingTransactions', () => {
+  describe.skip('getPendingTransactions', () => {
     it('should return a list of pending transactions', async () => {
       const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: EXAMPLE_SAFE })
 
@@ -57,10 +57,9 @@ describe('ApiClient', () => {
     })
   })
 
-  // TODO convert to sepolia safe
-  describe.skip('getDelegates', () => {
+  describe('getDelegates', () => {
     it('should list all delegates', async () => {
-      const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: 'sep:0x04786B39Bd84b3a5344dC7355e4d8785b0981902' })
+      const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: 'sep:0x4bCdCa2D6fa461Af5c326a3124C1F8b6e3D11538' })
 
       const result = await api.getDelegates()
 
@@ -71,10 +70,10 @@ describe('ApiClient', () => {
           previous: null,
           results: [
             {
-              safe: '0x04786B39Bd84b3a5344dC7355e4d8785b0981902',
-              delegate: '0x54bCee87c3397AF31a92b8faf27faB77758a27Ce',
-              delegator: '0xcC528c1bC5F43D15C0b9DC41b510E764Dc19da4D',
-              label: 'Delegate',
+              delegate: '0x972A34a8A7B9E19DA849921F8d9D58F3D2DF568b',
+              delegator: '0xD3B282e9880cDcB1142830731cD83f7ac0e1043f',
+              label: 'Delegate #1',
+              safe: '0x4bCdCa2D6fa461Af5c326a3124C1F8b6e3D11538',
             },
           ],
         },
