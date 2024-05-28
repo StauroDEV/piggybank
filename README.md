@@ -28,7 +28,7 @@ Status][gh-actions-img]][github-actions]
 pnpm i viem @stauro/piggybank
 ```
 
-[site-url]: https://piggybank.stauro.xyz
+[site-url]: https://piggybank.stauro.dev
 [npm-url]: https://npmjs.com/package/@stauro/piggybank
 [github-actions]: https://github.com/StauroXYZ/piggybank/actions
 [gh-actions-img]: https://img.shields.io/github/actions/workflow/status/StauroXYZ/piggybank/ci.yml?branch=master&style=for-the-badge&logo=github&label=&color=1B2A22
