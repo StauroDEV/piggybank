@@ -5,5 +5,9 @@ export default defineConfig({
     globalSetup: ['./tests/globalSetup.ts'],
     setupFiles: ['./tests/setup.ts'],
     hookTimeout: 25_000,
+    coverage: {
+      provider: 'v8',
+      reporter: 'lcov',
+    },
   },
 })
