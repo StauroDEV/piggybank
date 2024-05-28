@@ -4,7 +4,7 @@ export type SafeVersion = '1.4.1' | '1.3.0'
 
 export enum OperationType {
   Call, // 0
-  DelegateCall // 1
+  DelegateCall, // 1
 }
 
 export type SafeTransactionDataPartial = Partial<SafeTransactionData>

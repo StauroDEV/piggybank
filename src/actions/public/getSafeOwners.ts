@@ -13,6 +13,6 @@ export const getSafeOwners = async (
   return await client.readContract({
     abi: safeAbi,
     functionName: 'getOwners',
-    address
+    address,
   }) as Address[]
 }

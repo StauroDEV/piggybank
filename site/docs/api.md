@@ -20,7 +20,7 @@ To initalize the client you need to pass a Safe address and a service URL.
 import { ApiClient } from '@stauro/piggybank/api'
 
 const apiClient = new ApiClient({
-  url: 'https://safe-transaction-goerli.safe.global',
+  url: 'https://safe-transaction-sepolia.safe.global',
   safeAddress: '0x_YOUR_SAFE_ADDRESS',
 })
 ```

@@ -1,12 +1,11 @@
 import {
-	goerli,
-	sepolia,
-	type Chain
+  sepolia,
+  type Chain,
 } from 'viem/chains'
 
 interface NetworkShortName {
-	shortName: string
-	chainId: number
+  shortName: string
+  chainId: number
 }
 
 // TODO:
@@ -14,15 +13,13 @@ interface NetworkShortName {
 // - Add support for local & anvil when testing
 // https://github.com/ethereum-lists/chains/tree/master/_data/chains
 export const networkShortNames: NetworkShortName[] = [
-	{ chainId: 1, shortName: 'eth' },
-	{ chainId: 5, shortName: 'gor' },
-	{ chainId: 11155111, shortName: 'sep' },
+  { chainId: 1, shortName: 'eth' },
+  { chainId: 11155111, shortName: 'sep' },
 ]
 
 const networksByNetworkType = {
-	ETHEREUM_GOERLI: goerli,
-	ETHEREUM_SEPOLIA: sepolia,
-} as any
+  ETHEREUM_SEPOLIA: sepolia,
+}
 
 export type NetworkType = keyof typeof networksByNetworkType
 

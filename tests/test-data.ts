@@ -1,10 +1,10 @@
-import { SafeInfoResponse, SafeMultisigTransactionResponse } from "../src/types.js"
+import { SafeInfoResponse, SafeMultisigTransactionResponse } from '../src/types.js'
 
 // ========================================
 // TEST TRANSACTION DATA
 // ========================================
 
-// Example safe: 
+// Example safe:
 export const EXAMPLE_SAFE_INFO_RESPONSE: SafeInfoResponse = {
   address: '0xbcA814Ee6E571d0BbC335b4e3869F89E532Ba8B8',
   nonce: 1,
@@ -14,14 +14,14 @@ export const EXAMPLE_SAFE_INFO_RESPONSE: SafeInfoResponse = {
   modules: [],
   fallbackHandler: '0x017062a1dE2FE6b99BE3d9d37841FeD19F573804',
   guard: '0x0000000000000000000000000000000000000000',
-  version: '1.3.0+L2'
+  version: '1.3.0+L2',
 }
 
 export const NONCE_0 = 0
 export const NONCE_1 = 1
 
-// For nonce = 0 
-export const TEST_TRANSACTION_HASH_0 = '0xff325d5c14219e7fcf23ccec94d504384404adbfcfef0c846600876a6ef2d832';
+// For nonce = 0
+export const TEST_TRANSACTION_HASH_0 = '0xff325d5c14219e7fcf23ccec94d504384404adbfcfef0c846600876a6ef2d832'
 
 export const MULTISIG_TRANSACTION_TEST_RESPONSE_0: SafeMultisigTransactionResponse = {
   safe: '0xbcA814Ee6E571d0BbC335b4e3869F89E532Ba8B8',
@@ -59,11 +59,11 @@ export const MULTISIG_TRANSACTION_TEST_RESPONSE_0: SafeMultisigTransactionRespon
       submissionDate: '2024-02-03T15:26:43.684875Z',
       transactionHash: null,
       signature: '0x1cf589758060307d1a6209ff2239bacb1933231bbb7d1b97909049f4e818a26322aa1ab19291ba78685bd798a1438ccdf4da63def4cd2bf0ef02e92fd7fa8afa1b',
-      signatureType: 'EOA'
-    }
+      signatureType: 'EOA',
+    },
   ],
   trusted: true,
-  signatures: '0x1cf589758060307d1a6209ff2239bacb1933231bbb7d1b97909049f4e818a26322aa1ab19291ba78685bd798a1438ccdf4da63def4cd2bf0ef02e92fd7fa8afa1b'
+  signatures: '0x1cf589758060307d1a6209ff2239bacb1933231bbb7d1b97909049f4e818a26322aa1ab19291ba78685bd798a1438ccdf4da63def4cd2bf0ef02e92fd7fa8afa1b',
 }
 
 export const MULTISIG_TRANSACTION_TEST_RESPONSE_1: SafeMultisigTransactionResponse = {
@@ -101,8 +101,8 @@ export const MULTISIG_TRANSACTION_TEST_RESPONSE_1: SafeMultisigTransactionRespon
     submissionDate: '2024-02-03T16:54:00.990665Z',
     transactionHash: null,
     signature: '0x54d3e09114ef529192072b296bb5d254f05dbcba2bb54bd2fee7bf3901a74ab9746b0e1134d10fa435a87015a124ca918c8cf16838c1303e98d06462e0bdb7b01b',
-    signatureType: 'EOA'
+    signatureType: 'EOA',
   }],
   trusted: true,
-  signatures: null
+  signatures: null,
 }

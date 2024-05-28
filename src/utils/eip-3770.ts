@@ -22,7 +22,7 @@ function isValidEip3770NetworkPrefix(prefix: string): boolean {
 }
 
 function getEip3770NetworkPrefixFromChainId(chainId: number): string {
-  const network = networkShortNames.find((network) => chainId === network.chainId)
+  const network = networkShortNames.find(network => chainId === network.chainId)
   if (!network) {
     throw new Error('No network prefix supported for the current chainId')
   }
@@ -38,7 +38,7 @@ function validateEip3770NetworkPrefix(prefix: string, currentChainId: number): v
 
 export function getEip3770Address({
   fullAddress,
-  chainId
+  chainId,
 }: {
   fullAddress: EIP3770Address | Address
   chainId: number

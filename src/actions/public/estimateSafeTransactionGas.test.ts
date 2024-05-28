@@ -10,12 +10,12 @@ describe('estimateSafeTransactionGas', () => {
     const gas1 = await estimateSafeTransactionGas(publicClient, EXAMPLE_SAFE as EIP3770Address, {
       to: zeroAddress,
       value: 1n,
-      operation: OperationType.Call
+      operation: OperationType.Call,
     })
     const gas2 = await estimateSafeTransactionGas(publicClient, EXAMPLE_SAFE as EIP3770Address, {
       to: zeroAddress,
       value: 8n,
-      operation: OperationType.Call
+      operation: OperationType.Call,
     })
     expect(gas1).toEqual(gas2)
   })

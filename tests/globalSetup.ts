@@ -7,7 +7,7 @@ export default async function () {
     options: {
       chainId: networks[TEST_NETWORK_TYPE].id,
       forkUrl: FORK_URL,
-      forkBlockNumber: FORK_BLOCK_NUMBER
-    }
+      forkBlockNumber: FORK_BLOCK_NUMBER,
+    },
   })
 }

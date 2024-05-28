@@ -59,7 +59,7 @@ export default defineConfig({
           {
             text: 'getDelegates',
             link: '/docs/api/getDelegates',
-          }
+          },
         ],
       },
       {
@@ -67,14 +67,14 @@ export default defineConfig({
         items: [
           {
             text: 'EIP-3770',
-            link: '/docs/utils/eip-3770'
+            link: '/docs/utils/eip-3770',
           },
           {
             text: 'Safe versions',
-            link: '/docs/utils/safeVersions'
-          }
-        ]
-      }
+            link: '/docs/utils/safeVersions',
+          },
+        ],
+      },
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/StauroXYZ/piggybank' }],
   },

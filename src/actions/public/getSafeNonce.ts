@@ -15,6 +15,6 @@ export const getSafeNonce = async (
   return await client.readContract({
     abi: safeAbi,
     functionName: 'nonce',
-    address
+    address,
   })
 }

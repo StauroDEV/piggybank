@@ -7,7 +7,7 @@ afterAll(async () => {
   // If you are using a fork, you can reset your anvil instance to the initial fork block.
   await testClient.reset({
     jsonRpcUrl: FORK_URL,
-    blockNumber: FORK_BLOCK_NUMBER
+    blockNumber: FORK_BLOCK_NUMBER,
   })
 })
 

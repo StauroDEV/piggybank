@@ -6,7 +6,7 @@ import {
   http, HttpTransport,
   PublicClient,
   WalletClient,
-  defineChain
+  defineChain,
 } from 'viem'
 import { networks } from '../src/utils/networks.js'
 import { TEST_NETWORK_TYPE } from './constants.js'
@@ -25,28 +25,28 @@ export const anvil = defineChain({
     default: {
       // Note how we append the worker id to the local rpc urls.
       http: [`http://127.0.0.1:8545/${pool}`],
-      webSocket: [`ws://127.0.0.1:8545/${pool}`]
+      webSocket: [`ws://127.0.0.1:8545/${pool}`],
     },
     public: {
       // Note how we append the worker id to the local rpc urls.
       http: [`http://127.0.0.1:8545/${pool}`],
-      webSocket: [`ws://127.0.0.1:8545/${pool}`]
-    }
-  }
+      webSocket: [`ws://127.0.0.1:8545/${pool}`],
+    },
+  },
 }) as Chain
 
 export const testClient = createTestClient({
   chain: anvil,
   mode: 'anvil',
-  transport: http()
+  transport: http(),
 })
 
 export const publicClient: PublicClient<HttpTransport, typeof anvil> = createPublicClient({
   chain: anvil,
-  transport: http()
+  transport: http(),
 })
 
 export const walletClient: WalletClient<HttpTransport, typeof anvil> = createWalletClient({
   chain: anvil,
-  transport: http()
+  transport: http(),
 })

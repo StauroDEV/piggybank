@@ -6,13 +6,13 @@ Object.defineProperty(BigInt.prototype, 'toJSON', {
   get() {
     'use strict'
     return () => String(this)
-  }
+  },
 })
 
 export async function sendRequest<T>({
   url,
   method,
-  body
+  body,
 }: {
   url: URL | string
   method: 'GET' | 'POST'
@@ -21,17 +21,18 @@ export async function sendRequest<T>({
   const response = await fetch(url, {
     method,
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
     },
-    body: body ? JSON.stringify(body) : undefined
+    body: body ? JSON.stringify(body) : undefined,
   })
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let jsonResponse: any
   try {
     jsonResponse = await response.json()
-  } catch (error) {
+  }
+  catch (error) {
     if (!response.ok) {
       throw new Error(response.statusText)
     }
@@ -76,7 +77,7 @@ export type ProposeTransactionProps = {
 }
 
 export type GetPendingTransactionsProps = {
-  safeAddress: EIP3770Address | Address,
+  safeAddress: EIP3770Address | Address
   currentNonce?: number
 }
 
@@ -109,45 +110,47 @@ export class ApiClient {
   #url: URL | string
   safeAddress: EIP3770Address | Address
   chainId: number
-  constructor({ url, safeAddress, chainId }: { url: URL | string; safeAddress: EIP3770Address | Address, chainId: number }) {
+  constructor({ url, safeAddress, chainId }: { url: URL | string, safeAddress: EIP3770Address | Address, chainId: number }) {
     this.#url = new URL('/api', url)
     this.safeAddress = safeAddress
     this.chainId = chainId
   }
+
   async getSafeInfo(safeAddress: EIP3770Address | Address): Promise<SafeInfoResponse> {
     if (!safeAddress) throw new Error('Invalid Safe address')
 
     const { address } = getEip3770Address({
       fullAddress: safeAddress,
-      chainId: this.chainId
+      chainId: this.chainId,
     })
 
     return sendRequest({
       url: `${this.#url}/v1/safes/${address}/`,
-      method: 'GET'
+      method: 'GET',
     })
   }
+
   async proposeTransaction({
     safeTransactionData,
     senderAddress,
     safeTxHash,
     origin,
     senderSignature,
-    chainId
+    chainId,
   }: ProposeTransactionProps) {
     const { address: safeAddress } = getEip3770Address({
       fullAddress: this.safeAddress,
-      chainId: chainId ?? this.chainId
+      chainId: chainId ?? this.chainId,
     })
 
     const sender = getEip3770Address({
       fullAddress: senderAddress,
-      chainId: chainId ?? this.chainId
+      chainId: chainId ?? this.chainId,
     })
 
     const { address: to } = getEip3770Address({
       fullAddress: safeTransactionData.to,
-      chainId: chainId ?? this.chainId
+      chainId: chainId ?? this.chainId,
     })
 
     const body = {
@@ -157,16 +160,16 @@ export class ApiClient {
       signature: senderSignature,
       origin,
       to,
-      value: safeTransactionData.value ?? 0n
+      value: safeTransactionData.value ?? 0n,
     }
-
 
     return sendRequest({
       url: `${this.#url}/v1/safes/${safeAddress}/multisig-transactions/`,
       method: 'POST',
-      body
+      body,
     })
   }
+
   async confirmTransaction(safeTxHash: string, signature: Hex): Promise<SignatureResponse> {
     if (!safeTxHash) throw new Error('Invalid safeTxHash')
 
@@ -175,37 +178,40 @@ export class ApiClient {
     return sendRequest({
       url: `${this.#url}/v1/multisig-transactions/${safeTxHash}/confirmations/`,
       method: 'POST',
-      body: { signature }
+      body: { signature },
     })
   }
+
   async getTransaction(safeTxHash: string): Promise<SafeMultisigTransactionResponse> {
     return sendRequest({
       url: `${this.#url}/v1/multisig-transactions/${safeTxHash}/`,
-      method: 'GET'
+      method: 'GET',
     })
   }
+
   async getMultisigTransactions(safeAddress: EIP3770Address | Address): Promise<SafeMultisigTransactionListResponse> {
     if (!safeAddress) throw new Error('Invalid Safe address')
 
     const { address } = getEip3770Address({
       fullAddress: safeAddress,
-      chainId: this.chainId
+      chainId: this.chainId,
     })
 
     return sendRequest({
       url: `${this.#url}/v1/safes/${address}/multisig-transactions/`,
-      method: 'GET'
+      method: 'GET',
     })
   }
+
   async getPendingTransactions({
     safeAddress,
-    currentNonce
+    currentNonce,
   }: GetPendingTransactionsProps): Promise<SafeMultisigTransactionListResponse[]> {
     if (!safeAddress) throw new Error('Invalid Safe address')
 
     const { address } = getEip3770Address({
       fullAddress: safeAddress,
-      chainId: this.chainId
+      chainId: this.chainId,
     })
 
     const nonce = currentNonce ?? (await this.getSafeInfo(address)).nonce
@@ -217,11 +223,11 @@ export class ApiClient {
 
     return sendRequest({
       url: url.toString(),
-      method: 'GET'
+      method: 'GET',
     })
   }
-  async getDelegates(args?: GetDelegateProps): Promise<SafeDelegateListResponse> {
 
+  async getDelegates(args?: GetDelegateProps): Promise<SafeDelegateListResponse> {
     const { delegateAddress,
       delegatorAddress,
       label,
@@ -232,7 +238,7 @@ export class ApiClient {
 
     const { address: safeAddress } = getEip3770Address({
       fullAddress: this.safeAddress,
-      chainId: chainId ?? this.chainId
+      chainId: chainId ?? this.chainId,
     })
 
     url.searchParams.set('safe', safeAddress)
@@ -256,18 +262,19 @@ export class ApiClient {
     }
     return sendRequest({
       url: url.toString(),
-      method: 'GET'
+      method: 'GET',
     })
   }
+
   async getSafesByOwner(ownerAddress: EIP3770Address | Address): Promise<SafesByOwnersResponse> {
     const { address: owner } = getEip3770Address({
       fullAddress: ownerAddress,
-      chainId: this.chainId
+      chainId: this.chainId,
     })
 
     return sendRequest({
       url: `${this.#url}/v1/owners/${owner}/safes`,
-      method: 'GET'
+      method: 'GET',
     })
   }
 }

@@ -17,15 +17,15 @@ export type PublicSafeActions = {
 export const publicSafeActions = (
   safeAddress: EIP3770Address | Address,
 ): ((client: PublicClient) => PublicSafeActions) => {
-  return (client) => ({
-    estimateSafeTransactionGas: (args) => estimateSafeTransactionGas(client, safeAddress, args),
-    getSafeTransactionHash: (args) => getSafeTransactionHash(client, safeAddress, args),
-    estimateSafeTransactionBaseGas: (args) => estimateSafeTransactionBaseGas(client, safeAddress, args),
-    getSafeNonce: (args) => getSafeNonce(client, safeAddress, args),
-    getSafeOwners: (args) => getSafeOwners(client, safeAddress, args)
+  return client => ({
+    estimateSafeTransactionGas: args => estimateSafeTransactionGas(client, safeAddress, args),
+    getSafeTransactionHash: args => getSafeTransactionHash(client, safeAddress, args),
+    estimateSafeTransactionBaseGas: args => estimateSafeTransactionBaseGas(client, safeAddress, args),
+    getSafeNonce: args => getSafeNonce(client, safeAddress, args),
+    getSafeOwners: args => getSafeOwners(client, safeAddress, args),
   })
 }
 
 export {
-  estimateSafeTransactionBaseGas, estimateSafeTransactionGas, getSafeTransactionHash, getSafeNonce, getSafeOwners
+  estimateSafeTransactionBaseGas, estimateSafeTransactionGas, getSafeTransactionHash, getSafeNonce, getSafeOwners,
 }
