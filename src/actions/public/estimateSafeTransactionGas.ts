@@ -8,7 +8,7 @@ function decodeSafeTxGas(data: Hex): bigint {
 }
 
 export type EstimateSafeTransactionGasArgs = Pick<SafeTransactionData, 'to' | 'operation'> &
-Pick<SafeTransactionDataPartial, 'value' | 'data'> & { chainId?: number }
+  Pick<SafeTransactionDataPartial, 'value' | 'data'> & { chainId?: number }
 
 export const estimateSafeTransactionGas = async (
   client: PublicClient<Transport>,
@@ -20,13 +20,13 @@ export const estimateSafeTransactionGas = async (
   const transactionDataToEstimate = encodeFunctionData({
     abi: simulateTxAccessorAbi,
     functionName: 'simulate',
-    args: [to, value ?? 0n, data ?? '0x', operation]
+    args: [to, value ?? 0n, data ?? '0x', operation],
   })
 
   const safeFunctionToEstimate = encodeFunctionData({
     abi: safeAbi,
     functionName: 'simulateAndRevert',
-    args: [simulateTxAccessorAddress, transactionDataToEstimate]
+    args: [simulateTxAccessorAddress, transactionDataToEstimate],
   })
 
   const { address } = getEip3770Address({ fullAddress: safeAddress, chainId: chainId || client.chain!.id })
@@ -35,15 +35,16 @@ export const estimateSafeTransactionGas = async (
     const { data: encodedResponse } = await client.call({
       to: address,
       data: safeFunctionToEstimate,
-      value: 0n
+      value: 0n,
     })
 
     if (!encodedResponse) throw new Error('Could not estimate gas')
 
     return decodeSafeTxGas(encodedResponse)
-  } catch (e) {
+  }
+  catch (e) {
     if (e instanceof CallExecutionError) {
-      const gasError = e.walk((e) => e instanceof RpcRequestError)
+      const gasError = e.walk(e => e instanceof RpcRequestError)
 
       if (gasError === null) throw e
 
@@ -54,6 +55,7 @@ export const estimateSafeTransactionGas = async (
           }
         ).data,
       )
-    } else throw e
+    }
+    else throw e
   }
 }

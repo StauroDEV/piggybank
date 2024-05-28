@@ -8,7 +8,7 @@ await apiClient.proposeTransaction({
   senderAddress: walletClient.account.address,
   safeTxHash,
   senderSignature,
-  chainId: goerli.id,
+  chainId: sepolia.id,
   origin: 'Piggybank',
   nonce,
 })

@@ -45,7 +45,7 @@ jobs:
         run: pnpm install
 
       - name: lint code
-        run: pnpm lint
+        run: pnpm lint && pnpm lint:types
 
       - name: Install foundry
         uses: foundry-rs/foundry-toolchain@v1
@@ -59,7 +59,8 @@ jobs:
         env:
           VITE_ANVIL_FORK_URL: ${{ vars.VITE_ANVIL_FORK_URL }}
           VITE_ANVIL_BLOCK_NUMBER: ${{ vars.VITE_ANVIL_BLOCK_NUMBER }}
-          VITE_ANVIL_SAFE_ADDRESS: ${{ vars.VITE_SAFE_ADDRESS }}
+          VITE_ANVIL_SAFE_ADDRESS: ${{ vars.VITE_ANVIL_SAFE_ADDRESS }}
+          VITE_TEST_ADDRESS: ${{ vars.VITE_TEST_ADDRESS }}
 
         # run coverage only on ubuntu
       - name: Coveralls

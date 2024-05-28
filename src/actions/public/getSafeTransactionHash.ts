@@ -4,8 +4,8 @@ import { safeAbi } from '../../constants.js'
 import { getEip3770Address } from '../../utils/eip-3770.js'
 
 export type GetSafeTransactionHashArgs = ArgsWithChainId<
-Pick<SafeTransactionData, 'to' | 'operation' | 'gasPrice' | 'safeTxGas' | 'baseGas'> &
-Pick<SafeTransactionDataPartial, 'value' | 'data' | 'gasToken' | 'refundReceiver' | 'nonce'>
+  Pick<SafeTransactionData, 'to' | 'operation' | 'gasPrice' | 'safeTxGas' | 'baseGas'> &
+  Pick<SafeTransactionDataPartial, 'value' | 'data' | 'gasToken' | 'refundReceiver' | 'nonce'>
 >
 
 export const getSafeTransactionHash = async (
@@ -22,7 +22,7 @@ export const getSafeTransactionHash = async (
     gasToken,
     refundReceiver,
     nonce,
-    chainId
+    chainId,
   }: GetSafeTransactionHashArgs,
 ): Promise<Hash> => {
   const { address: to } = getEip3770Address({ fullAddress: _to, chainId: chainId || client.chain!.id })
@@ -33,7 +33,7 @@ export const getSafeTransactionHash = async (
     address,
     functionName: 'getTransactionHash',
     args: [
-      to, value ?? 0n, data ?? '0x', operation, safeTxGas, baseGas, gasPrice ?? 0n, gasToken ?? zeroAddress, refundReceiver ?? zeroAddress, nonce || 0n
-    ]
+      to, value ?? 0n, data ?? '0x', operation, safeTxGas, baseGas, gasPrice ?? 0n, gasToken ?? zeroAddress, refundReceiver ?? zeroAddress, nonce || 0n,
+    ],
   })
 }

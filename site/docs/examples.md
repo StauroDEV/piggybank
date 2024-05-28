@@ -6,19 +6,19 @@
 
 ```ts
 import { http, createPublicClient, parseEther, getAddress, createWalletClient, Hex } from 'viem'
-import { goerli } from 'viem/chains'
+import { sepolia } from 'viem/chains'
 import { publicSafeActions, walletSafeActions } from '@stauro/piggybank/actions'
 
 const safeAddress = getAddress('0x_MY_SAFE_ADDRESS')
 
 const publicClient = createPublicClient({
   transport: http(),
-  chain: goerli,
+  chain: sepolia,
 }).extend(publicSafeActions(safeAddress))
 
 const walletClient = createWalletClient({
   transport: http(),
-  chain: goerli,
+  chain: sepolia,
   account: privateKeyToAccount(process.env.PK as Hex),
 }).extend(walletSafeActions())
 ```
@@ -63,14 +63,14 @@ const senderSignature = await walletClient.generateSafeTransactionSignature({
 ```ts
 import { ApiClient } from '@stauro/piggybank/api'
 
-const apiClient = new ApiClient({ url: 'https://safe-transaction-goerli.safe.global', safeAddress })
+const apiClient = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', safeAddress })
 
 await apiClient.proposeTransaction({
   safeTransactionData: { ...txData, safeTxGas, baseGas, nonce },
   senderAddress: walletClient.account.address,
   safeTxHash,
   senderSignature,
-  chainId: goerli.id,
+  chainId: sepolia.id,
   origin: 'Piggybank',
   nonce,
 })
