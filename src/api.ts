@@ -90,6 +90,14 @@ export type GetDelegateProps = Partial<{
   chainId: number
 }>
 
+export type CreateDelegateProps = {
+  delegate: EIP3770Address | Address
+  delegator: EIP3770Address | Address
+  signature: Hex
+  label: string
+  version?: '1' | '2'
+}
+
 export type SafeDelegateListResponse = {
   readonly count: number
   readonly next?: string
@@ -234,7 +242,7 @@ export class ApiClient {
       limit,
       offset, chainId } = args ?? {}
 
-    const url = new URL(`${this.#url}/v1/delegates`)
+    const url = new URL(`${this.#url}/v2/delegates`)
 
     const { address: safeAddress } = getEip3770Address({
       fullAddress: this.safeAddress,
@@ -263,6 +271,18 @@ export class ApiClient {
     return sendRequest({
       url: url.toString(),
       method: 'GET',
+    })
+  }
+
+  async createDelegate(args: CreateDelegateProps): Promise<Omit<CreateDelegateProps, 'version'>> {
+    const { address: delegator } = getEip3770Address({ fullAddress: args.delegator, chainId: this.chainId })
+    const { address: delegate } = getEip3770Address({ fullAddress: args.delegate, chainId: this.chainId })
+    const { address: safe } = getEip3770Address({ fullAddress: this.safeAddress, chainId: this.chainId })
+
+    return sendRequest({
+      url: `${this.#url}/v${args.version || '2'}/delegates/`,
+      method: 'POST',
+      body: { ...args, delegate, delegator, safe },
     })
   }
 

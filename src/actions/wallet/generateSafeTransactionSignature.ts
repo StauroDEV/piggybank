@@ -44,7 +44,7 @@ export const generateSafeTransactionSignature = async (
     },
     primaryType: 'SafeTx',
     domain: {
-      chainId: BigInt(client.chain.id),
+      chainId: BigInt(chainId || client.chain.id),
       verifyingContract: address,
     },
     message: {

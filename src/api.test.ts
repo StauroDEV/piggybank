@@ -60,7 +60,7 @@ describe('ApiClient', () => {
   // TODO convert to sepolia safe
   describe.skip('getDelegates', () => {
     it('should list all delegates', async () => {
-      const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: 'gor:0x04786B39Bd84b3a5344dC7355e4d8785b0981902' })
+      const api = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', chainId: sepolia.id, safeAddress: 'sep:0x04786B39Bd84b3a5344dC7355e4d8785b0981902' })
 
       const result = await api.getDelegates()
 
