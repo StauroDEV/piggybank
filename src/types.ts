@@ -33,7 +33,7 @@ export type SafeTransactionData = {
 
 export type SafeInfoResponse = {
   readonly address: Address
-  readonly nonce: number
+  readonly nonce: number | string
   readonly threshold: number
   readonly owners: Address[]
   readonly masterCopy: Address
@@ -92,6 +92,7 @@ export type SafeMultisigTransactionResponse = {
   readonly confirmations?: SafeMultisigConfirmationResponse[]
   readonly trusted: boolean
   readonly signatures: Hex | null
+  readonly proposedByDelegate: Address | null
 }
 
 export type SafeMultisigTransactionListResponse = {

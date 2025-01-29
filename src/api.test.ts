@@ -72,6 +72,7 @@ describe('ApiClient', () => {
             {
               delegate: '0x972A34a8A7B9E19DA849921F8d9D58F3D2DF568b',
               delegator: '0xD3B282e9880cDcB1142830731cD83f7ac0e1043f',
+              expiryDate: null,
               label: 'Delegate #1',
               safe: '0x4bCdCa2D6fa461Af5c326a3124C1F8b6e3D11538',
             },

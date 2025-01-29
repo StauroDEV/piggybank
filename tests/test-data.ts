@@ -7,7 +7,7 @@ import { SafeInfoResponse, SafeMultisigTransactionResponse } from '../src/types.
 // Example safe:
 export const EXAMPLE_SAFE_INFO_RESPONSE: SafeInfoResponse = {
   address: '0x4bCdCa2D6fa461Af5c326a3124C1F8b6e3D11538',
-  nonce: 2,
+  nonce: '4',
   threshold: 1,
   owners: ['0xD3B282e9880cDcB1142830731cD83f7ac0e1043f'],
   masterCopy: '0xfb1bffC9d739B8D520DaF37dF666da4C687191EA',
@@ -54,6 +54,7 @@ export const MULTISIG_TRANSACTION_TEST_RESPONSE_0: SafeMultisigTransactionRespon
   gasUsed: 80822,
   fee: '427074449328996',
   origin: '{}',
+  proposedByDelegate: null,
   dataDecoded: null,
   confirmationsRequired: 1,
   confirmations: [
@@ -87,6 +88,7 @@ export const MULTISIG_TRANSACTION_TEST_RESPONSE_1: SafeMultisigTransactionRespon
   blockNumber: null,
   transactionHash: null,
   safeTxHash: '0xb199f858df683d77591642442e02610bb81b5a418acef3237095be495b7988ae',
+  proposedByDelegate: null,
   proposer: '0xD7a0ca30F71cFDF45534B058c567a5FaE6C33846',
   executor: null,
   isExecuted: false,
