@@ -1,9 +1,5 @@
-import { FORK_BLOCK_NUMBER, FORK_URL } from './constants.js'
 import { pool } from './utils.js'
-import { afterAll, afterEach, beforeAll } from 'vitest'
-
-import { sepolia } from 'viem/chains'
-import { anvil } from 'prool/instances'
+import { afterEach } from 'vitest'
 
 async function fetchLogs(url: string, id: number): Promise<string[]> {
   const response = await fetch(new URL(`${id}/logs`, url), {
@@ -21,20 +17,6 @@ async function fetchLogs(url: string, id: number): Promise<string[]> {
 
   return result.logs
 }
-
-const server = anvil({
-  chainId: sepolia.id,
-  forkUrl: FORK_URL,
-  forkBlockNumber: FORK_BLOCK_NUMBER,
-})
-
-beforeAll(() => {
-  return server.start()
-})
-
-afterAll(async () => {
-  await server.stop()
-})
 
 afterEach(async (context) => {
   context.onTestFailed(async () => {
