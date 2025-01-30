@@ -17,7 +17,7 @@ import { sepolia } from 'viem/chains'
    */
 export const pool = Number(process.env.VITEST_POOL_ID ?? 1)
 export const anvil = defineChain({
-  // Get chain details based on the network used for tests (ie. that setup in ./globalSetup.ts)
+  // Get chain details based on the network used for tests
   ...sepolia,
   rpcUrls: {
     // These rpc urls are automatically used in the transports.
