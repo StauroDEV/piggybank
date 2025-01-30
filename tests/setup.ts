@@ -1,6 +1,9 @@
 import { FORK_BLOCK_NUMBER, FORK_URL } from './constants.js'
-import { pool, testClient } from './utils.js'
-import { afterAll, afterEach } from 'vitest'
+import { pool } from './utils.js'
+import { afterAll, afterEach, beforeAll } from 'vitest'
+
+import { sepolia } from 'viem/chains'
+import { anvil } from 'prool/instances'
 
 async function fetchLogs(url: string, id: number): Promise<string[]> {
   const response = await fetch(new URL(`${id}/logs`, url), {
@@ -19,12 +22,18 @@ async function fetchLogs(url: string, id: number): Promise<string[]> {
   return result.logs
 }
 
+const server = anvil({
+  chainId: sepolia.id,
+  forkUrl: FORK_URL,
+  forkBlockNumber: FORK_BLOCK_NUMBER,
+})
+
+beforeAll(() => {
+  return server.start()
+})
+
 afterAll(async () => {
-  // If you are using a fork, you can reset your anvil instance to the initial fork block.
-  await testClient.reset({
-    jsonRpcUrl: FORK_URL,
-    blockNumber: FORK_BLOCK_NUMBER,
-  })
+  await server.stop()
 })
 
 afterEach(async (context) => {

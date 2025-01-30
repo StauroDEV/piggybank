@@ -49,8 +49,6 @@ jobs:
 
       - name: Install foundry
         uses: foundry-rs/foundry-toolchain@v1
-        with:
-          version: nightly
 
       - name: build packages
         run: pnpm build
