@@ -5,7 +5,7 @@ import { zeroAddress } from 'viem'
 import { EIP3770Address, OperationType } from '../../types.js'
 import { EXAMPLE_SAFE } from '../../../tests/constants.js'
 
-describe('estimateSafeTransactionGas', () => {
+describe('estimateSafeTransactionGas', { timeout: 10000 }, () => {
   it('should estimate fixed gas on a eth transfer tx', async () => {
     const gas1 = await estimateSafeTransactionGas(publicClient, EXAMPLE_SAFE as EIP3770Address, {
       to: zeroAddress,
@@ -19,4 +19,4 @@ describe('estimateSafeTransactionGas', () => {
     })
     expect(gas1).toEqual(gas2)
   })
-}, { timeout: 10000 })
+})
