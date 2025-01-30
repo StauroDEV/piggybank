@@ -4,11 +4,13 @@ import { createServer } from 'prool'
 import { anvil } from 'prool/instances'
 
 export default async function () {
-  return createServer({
+  const server = createServer({
     instance: anvil({
       chainId: sepolia.id,
       forkUrl: FORK_URL,
       forkBlockNumber: FORK_BLOCK_NUMBER,
     }),
   })
+
+  return server.start()
 }
