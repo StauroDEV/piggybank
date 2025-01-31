@@ -3,7 +3,7 @@ import { getSafeOwners } from './getSafeOwners.js'
 import { publicClient } from '../../../tests/utils.js'
 import { EIP3770Address } from '../../types.js'
 import { EXAMPLE_SAFE, TEST_ADDRESS } from '../../../tests/constants.js'
-import { parseEip3770Address } from '../../utils/eip-3770.js'
+import { parseEip3770Address } from '../../utils.js'
 
 describe('getSafeOwners', () => {
   it('should retrieve the safes owners', () => {

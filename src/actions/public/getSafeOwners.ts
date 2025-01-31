@@ -1,7 +1,7 @@
 import { Address, PublicClient } from 'viem'
 import { safeAbi } from '../../constants.js'
 import { ArgsWithChainId, EIP3770Address } from '../../types.js'
-import { getEip3770Address } from '../../utils/eip-3770.js'
+import { getEip3770Address } from '../../utils.js'
 
 export const getSafeOwners = async (
   client: PublicClient,

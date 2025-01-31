@@ -1,7 +1,6 @@
 import { getAddress, isAddress } from 'viem/utils'
-import type { EIP3770Address, Eip3770AddressInterface } from '../types.js'
+import type { EIP3770Address, Eip3770AddressInterface } from './types.js'
 import type { Address } from 'viem'
-import { networkShortNames } from './networks.js'
 
 export function parseEip3770Address(fullAddress: EIP3770Address | Address): Eip3770AddressInterface {
   const parts = fullAddress.split(':')
@@ -50,3 +49,13 @@ export function getEip3770Address({
   }
   return { address, prefix }
 }
+
+interface NetworkShortName {
+  shortName: string
+  chainId: number
+}
+
+export const networkShortNames: NetworkShortName[] = [
+  { chainId: 1, shortName: 'eth' },
+  { chainId: 11155111, shortName: 'sep' },
+]

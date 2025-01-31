@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { parseEip3770Address, getEip3770Address } from './eip-3770.js'
+import { parseEip3770Address, getEip3770Address } from './utils.js'
 
 describe('parseEip3770Address', () => {
   it('should parse an EIP-3770 address with a prefix', () => {

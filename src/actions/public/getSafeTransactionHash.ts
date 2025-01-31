@@ -1,7 +1,7 @@
 import { zeroAddress, type Address, type Hash, type PublicClient, type Transport } from 'viem'
 import type { ArgsWithChainId, EIP3770Address, SafeTransactionData, SafeTransactionDataPartial } from '../../types.js'
 import { safeAbi } from '../../constants.js'
-import { getEip3770Address } from '../../utils/eip-3770.js'
+import { getEip3770Address } from '../../utils.js'
 
 export type GetSafeTransactionHashArgs = ArgsWithChainId<
   Pick<SafeTransactionData, 'to' | 'operation' | 'gasPrice' | 'safeTxGas' | 'baseGas'> &

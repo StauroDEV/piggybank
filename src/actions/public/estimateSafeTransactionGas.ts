@@ -1,7 +1,7 @@
 import { Address, Hex, PublicClient, Transport, encodeFunctionData, CallExecutionError, RpcRequestError } from 'viem'
 import { simulateTxAccessorAbi, safeAbi, simulateTxAccessorAddress } from '../../constants.js'
 import type { EIP3770Address, SafeTransactionData, SafeTransactionDataPartial } from '../../types.js'
-import { getEip3770Address } from '../../utils/eip-3770.js'
+import { getEip3770Address } from '../../utils.js'
 
 function decodeSafeTxGas(data: Hex): bigint {
   return BigInt('0x' + data.slice(184).slice(0, 10))
