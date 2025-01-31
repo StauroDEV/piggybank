@@ -32,7 +32,7 @@ export async function sendRequest<T>({
   try {
     jsonResponse = await response.json()
   }
-  catch (error) {
+  catch {
     if (!response.ok) {
       throw new Error(response.statusText)
     }

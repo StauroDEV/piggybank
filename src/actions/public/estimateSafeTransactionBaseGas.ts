@@ -86,11 +86,12 @@ export const estimateSafeTransactionBaseGas = async (
 
   let baseGas
     = signaturesGasCost
-    + BigInt(estimateDataGasCosts(execTransactionData))
-    + BigInt(incrementNonceGasCost)
-    + BigInt(HASH_GENERATION_GAS_COST)
+      + BigInt(estimateDataGasCosts(execTransactionData))
+      + BigInt(incrementNonceGasCost)
+      + BigInt(HASH_GENERATION_GAS_COST)
 
   // Add additional gas costs
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   baseGas > 65536n ? (baseGas += 64n) : (baseGas += 128n)
 
   // Base tx costs, transfer costs...
