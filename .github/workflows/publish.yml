@@ -10,15 +10,18 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+
       - name: Enable corepack
         run: corepack enable pnpm
 
       - uses: actions/setup-node@v4
         with:
           cache: 'pnpm'
-          node-version: 22
-          registry-url: 'https://registry.npmjs.org'
-      - run: pnpm install
+          node-version: 22.14
+
+      - name: install dependencies
+        run: pnpm install
+
       - run: pnpm build
       - name: lint code
         run: pnpm lint && pnpm lint:types
