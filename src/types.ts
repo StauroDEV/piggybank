@@ -24,8 +24,8 @@ export type SafeTransactionData = {
   data: Hex
   operation: OperationType
   nonce: bigint
-  safeTxGas: bigint
-  baseGas: bigint
+  safeTxGas?: bigint
+  baseGas?: bigint
   gasPrice?: bigint
   gasToken?: Address
   refundReceiver?: Address

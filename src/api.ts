@@ -145,7 +145,7 @@ export class ApiClient {
     origin,
     senderSignature,
     chainId,
-  }: ProposeTransactionProps) {
+  }: ProposeTransactionProps): Promise<null> {
     const { address: safeAddress } = getEip3770Address({
       fullAddress: this.safeAddress,
       chainId: chainId ?? this.chainId,
@@ -169,6 +169,7 @@ export class ApiClient {
       origin,
       to,
       value: safeTransactionData.value ?? 0n,
+      baseGas: safeTransactionData.baseGas ?? 0n,
     }
 
     return sendRequest({

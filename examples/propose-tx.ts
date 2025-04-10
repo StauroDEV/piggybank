@@ -25,20 +25,16 @@ const txData: Pick<SafeTransactionData, 'to' | 'operation' | 'value'> = {
   value: parseEther('0.001'),
 }
 
-const safeTxGas = await publicClient.estimateSafeTransactionGas(txData)
-
-const baseGas = await publicClient.estimateSafeTransactionBaseGas({ ...txData, safeTxGas })
-
 const nonce = await publicClient.getSafeNonce()
 
-const safeTxHash = await publicClient.getSafeTransactionHash({ ...txData, safeTxGas, baseGas, nonce })
+const safeTxHash = await publicClient.getSafeTransactionHash({ ...txData, nonce })
 
-const senderSignature = await walletClient.generateSafeTransactionSignature({ ...txData, nonce, safeTxGas, baseGas })
+const senderSignature = await walletClient.generateSafeTransactionSignature({ ...txData, nonce })
 
 const apiClient = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', safeAddress, chainId: sepolia.id })
 
 await apiClient.proposeTransaction({
-  safeTransactionData: { ...txData, safeTxGas, baseGas, nonce },
+  safeTransactionData: { ...txData, safeTxGas: 0n, nonce, gasPrice: 0n },
   senderAddress: walletClient.account.address,
   safeTxHash,
   senderSignature,

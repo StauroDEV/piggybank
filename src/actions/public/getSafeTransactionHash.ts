@@ -33,7 +33,7 @@ export const getSafeTransactionHash = async (
     address,
     functionName: 'getTransactionHash',
     args: [
-      to, value ?? 0n, data ?? '0x', operation, safeTxGas, baseGas, gasPrice ?? 0n, gasToken ?? zeroAddress, refundReceiver ?? zeroAddress, nonce || 0n,
+      to, value ?? 0n, data ?? '0x', operation, safeTxGas ?? 0n, baseGas ?? 0n, gasPrice ?? 0n, gasToken ?? zeroAddress, refundReceiver ?? zeroAddress, nonce || 0n,
     ],
   })
 }
