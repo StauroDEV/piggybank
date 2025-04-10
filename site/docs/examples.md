@@ -35,27 +35,14 @@ const txData = {
 }
 ```
 
-### 3. Calculate gas (tx and base)
-
-```ts
-const safeTxGas = await publicClient.estimateSafeTransactionGas(txData)
-
-const baseGas = await publicClient.estimateSafeTransactionBaseGas({ ...txData, safeTxGas })
-```
-
-### 4. Get nonce, transaction hash and signature
+### 3. Get nonce, transaction hash and signature
 
 ```ts
 const nonce = await publicClient.getSafeNonce()
 
-const safeTxHash = await publicClient.getSafeTransactionHash({ ...txData, safeTxGas, baseGas, nonce })
+const safeTxHash = await publicClient.getSafeTransactionHash({ ...txData, nonce })
 
-const senderSignature = await walletClient.generateSafeTransactionSignature({
-  ...txData,
-  nonce,
-  safeTxGas,
-  baseGas,
-})
+const senderSignature = await walletClient.generateSafeTransactionSignature({ ...txData, nonce })
 ```
 
 ### 5. Propose the transaction
@@ -66,12 +53,10 @@ import { ApiClient } from '@stauro/piggybank/api'
 const apiClient = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', safeAddress })
 
 await apiClient.proposeTransaction({
-  safeTransactionData: { ...txData, safeTxGas, baseGas, nonce },
+  safeTransactionData: { ...txData, nonce },
   senderAddress: walletClient.account.address,
   safeTxHash,
   senderSignature,
-  chainId: sepolia.id,
   origin: 'Piggybank',
-  nonce,
 })
 ```

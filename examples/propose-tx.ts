@@ -34,7 +34,7 @@ const senderSignature = await walletClient.generateSafeTransactionSignature({ ..
 const apiClient = new ApiClient({ url: 'https://safe-transaction-sepolia.safe.global', safeAddress, chainId: sepolia.id })
 
 await apiClient.proposeTransaction({
-  safeTransactionData: { ...txData, safeTxGas: 0n, nonce, gasPrice: 0n },
+  safeTransactionData: { ...txData, nonce },
   senderAddress: walletClient.account.address,
   safeTxHash,
   senderSignature,
